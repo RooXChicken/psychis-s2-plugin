@@ -208,6 +208,9 @@ public class Psychis extends JavaPlugin implements Listener
                 case 2:
                     event.setDeathMessage(event.getEntity().getName() + " got shocked by " + damagedPlayers.get(event.getEntity()).getName());
                     break;
+                case 4:
+                    event.setDeathMessage(event.getEntity().getName() + " couldn't handle the cold");
+                    break;
             }
         }
     }

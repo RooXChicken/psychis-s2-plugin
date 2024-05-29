@@ -19,11 +19,13 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.rooxchicken.psychis.Psychis;
+import com.rooxchicken.psychis.Abilities.Ymir;
 
 public class Ymir_Biome extends Task
 {
     private Player player;
     private Location start;
+    private Ymir ymir;
     private int t;
 
     private int size = 0;
@@ -31,15 +33,18 @@ public class Ymir_Biome extends Task
     private ArrayList<BlockData> oldBlocks;
     List<Block> blocks;
 
-    public Ymir_Biome(Psychis _plugin, Player _player)
+    public Ymir_Biome(Psychis _plugin, Player _player, Ymir _ymir)
     {
         super(_plugin);
         player = _player;
+        ymir = _ymir;
         start = player.getLocation().clone();
         tickThreshold = 1;
 
         converted = new ArrayList<Block>();
         oldBlocks = new ArrayList<BlockData>();
+
+        ymir.deadly = true;
     }
 
     @Override
@@ -104,5 +109,7 @@ public class Ymir_Biome extends Task
         {
             converted.get(i).setBlockData(oldBlocks.get(i));
         }
+
+        ymir.deadly = false;
     }
 }

@@ -95,7 +95,7 @@ public class Ymir extends Ability implements Listener
             if(!plugin.setCooldown(player, 120, Psychis.ability2CooldownKey))
                 return;
 
-            Psychis.tasks.add(new Ymir_Biome(plugin, player));
+            Psychis.tasks.add(new Ymir_Biome(plugin, player, this));
         }
     }
 

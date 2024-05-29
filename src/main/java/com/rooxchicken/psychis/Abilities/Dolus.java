@@ -21,6 +21,7 @@ import com.comphenix.protocol.wrappers.WrappedDataWatcher.Registry;
 import com.rooxchicken.psychis.Psychis;
 import com.rooxchicken.psychis.Tasks.Agni_Cinder;
 import com.rooxchicken.psychis.Tasks.Agni_HeatSeek;
+import com.rooxchicken.psychis.Tasks.Dolus_Crush;
 
 public class Dolus extends Ability 
 {
@@ -53,6 +54,6 @@ public class Dolus extends Ability
     @Override
     public void activateSecondAbility(int state)
     {
-        
+        Psychis.tasks.add(new Dolus_Crush(plugin, player));
     }
 }

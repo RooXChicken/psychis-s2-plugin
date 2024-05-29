@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -63,6 +64,7 @@ public class Enil extends Ability implements Listener
             if(!plugin.setCooldown(player, 45, Psychis.ability1CooldownKey))
                 return;
             Entity entity = plugin.getTarget(player, 50);
+            deadly = true;
             if(entity != null)
             {
                 if(entity instanceof LivingEntity)
@@ -80,8 +82,9 @@ public class Enil extends Ability implements Listener
                 if(block != null)
                     player.getWorld().strikeLightning(block.getLocation());
             }
-            
         }
+        if(state == 1)
+            deadly = false;
     }
     
     @Override
