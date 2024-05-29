@@ -22,6 +22,7 @@ import com.rooxchicken.psychis.Psychis;
 import com.rooxchicken.psychis.Tasks.Agni_Cinder;
 import com.rooxchicken.psychis.Tasks.Agni_HeatSeek;
 import com.rooxchicken.psychis.Tasks.Dolus_Crush;
+import com.rooxchicken.psychis.Tasks.Dolus_Retract;
 
 public class Dolus extends Ability 
 {
@@ -48,12 +49,17 @@ public class Dolus extends Ability
     @Override
     public void activateFirstAbility(int state)
     {
+        if(!plugin.setCooldown(player, 45, Psychis.ability1CooldownKey))
+            return;
         
+        Psychis.tasks.add(new Dolus_Retract(plugin, player));
     }
     
     @Override
     public void activateSecondAbility(int state)
     {
+        if(!plugin.setCooldown(player, 120, Psychis.ability2CooldownKey))
+                return;
         Psychis.tasks.add(new Dolus_Crush(plugin, player));
     }
 }

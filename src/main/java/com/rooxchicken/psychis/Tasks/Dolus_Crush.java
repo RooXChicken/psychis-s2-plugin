@@ -30,9 +30,7 @@ public class Dolus_Crush extends Task
         super(_plugin);
         plugin = _plugin;
         player = _player;
-        double blockY = Psychis.getBlock(player, 40, 90).getLocation().getY() + 1.1;
-        start = player.getEyeLocation().clone();
-        start.setY(blockY);
+        start = player.getEyeLocation();
         tickThreshold = 1;
 
         cacheX = new double[180];
@@ -45,12 +43,15 @@ public class Dolus_Crush extends Task
         }
 
         player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ILLUSIONER_CAST_SPELL, 1, 0.2f);
-        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_SMOKER_SMOKE, 1, 1);
+        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1, 0.8f);
     }
 
     @Override
     public void run()
     {
+        double blockY = Psychis.getBlock(player, 40, 90).getLocation().getY() + 1.1;
+        start = player.getEyeLocation();
+        start.setY(blockY);
         if(size < 8)
             size += 0.3;
         if(t % 8 == 0)
@@ -92,7 +93,7 @@ public class Dolus_Crush extends Task
             // }
         }
 
-        if(++t > 100)
+        if(++t > 140)
             cancel = true;
     }
 }
