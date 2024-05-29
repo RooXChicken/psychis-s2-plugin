@@ -1,0 +1,24 @@
+package com.rooxchicken.psychis.CommonParticles;
+
+import com.rooxchicken.psychis.Psychis;
+
+public abstract class Particle
+{
+    private Psychis plugin;
+    public int id;
+
+    private int tick = 0;
+    public int duration = 1;
+
+    public Particle(Psychis _plugin) { plugin = _plugin; }
+
+    public void tick()
+    {
+        if(tick++ < duration || tick == -1)
+        {
+            run();
+        }
+    }
+
+    public void run() {}
+}

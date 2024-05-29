@@ -1,0 +1,29 @@
+package com.rooxchicken.psychis.Tasks;
+
+import org.bukkit.Color;
+import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+import com.rooxchicken.psychis.Psychis;
+
+public class Enil_Passive extends Task
+{
+    private Player player;
+
+    public Enil_Passive(Psychis _plugin, Player _player)
+    {
+        super(_plugin);
+        player = _player;
+        tickThreshold = 20;
+    }
+
+    @Override
+    public void run()
+    {
+        player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 21, 1));
+    }
+}

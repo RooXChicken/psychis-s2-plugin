@@ -1,0 +1,43 @@
+main: com.rooxchicken.psychis.Psychis
+name: PsychisPlugin
+version: 0.1
+api-version: '1.20'
+
+commands:
+   hdn_ability1_srt:
+      description: First ability START
+      usage: /hdn_ability1_srt
+
+   hdn_ability2_srt:
+      description: Second ability START
+      usage: /hdn_ability2_srt
+
+   hdn_ability1_rpt:
+         description: First ability REPEAT
+         usage: /hdn_ability1_rpt
+
+   hdn_ability2_rpt:
+         description: Second ability REPEAT
+         usage: /hdn_ability2_rpt
+
+   hdn_ability1_end:
+         description: First ability END
+         usage: /hdn_ability1_end
+         
+   hdn_ability2_end:
+      description: Second ability END
+      usage: /hdn_ability2_end
+
+   ptest:
+      description: Particle testing
+      usage: /ptest
+
+   resetcooldown:
+      description: Resets the cooldown for abilities
+      usage: /resetcooldown
+
+   setability:
+      description: Sets the selected ability
+      usage: /setability <ability>
+
+depend: [ ProtocolLib ]
