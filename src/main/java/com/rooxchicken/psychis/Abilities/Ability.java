@@ -10,6 +10,8 @@ public abstract class Ability implements Listener
 {
     private Psychis plugin;
     private Player player;
+    public int type = -1;
+    public boolean deadly = false;
 
     public Ability(Psychis _plugin, Player _player) { plugin = _plugin; player = _player; Bukkit.getServer().getPluginManager().registerEvents(this, plugin);}
 

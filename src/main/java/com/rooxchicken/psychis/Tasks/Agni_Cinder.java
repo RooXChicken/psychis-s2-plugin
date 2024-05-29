@@ -26,19 +26,22 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.WrappedDataValue;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher.Registry;
 import com.rooxchicken.psychis.Psychis;
+import com.rooxchicken.psychis.Abilities.Agni;
 
 public class Agni_Cinder extends Task
 {
     private Player player;
+    private Agni agni;
     private Location start;
     private int t;
     private double dmg = 1;
     private static double offset = 0.1;
 
-    public Agni_Cinder(Psychis _plugin, Player _player, double _dmg)
+    public Agni_Cinder(Psychis _plugin, Player _player, Agni _agni, double _dmg)
     {
         super(_plugin);
         player = _player;
+        agni = _agni;
         start = player.getEyeLocation().clone();
         tickThreshold = 1;
 
@@ -68,7 +71,10 @@ public class Agni_Cinder extends Task
                 entity.setFireTicks(200);
 
                 if(entity instanceof LivingEntity)
+                {
+                    agni.deadly = true;
                     ((LivingEntity)entity).damage(dmg*4.0, player);
+                }
 
                 explode(particlePos);
 
@@ -178,5 +184,11 @@ public class Agni_Cinder extends Task
                 }
             }
         }
+    }
+
+    @Override
+    public void onCancel()
+    {
+        agni.deadly = false;
     }
 }

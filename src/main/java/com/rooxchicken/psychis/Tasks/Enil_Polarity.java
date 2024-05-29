@@ -16,11 +16,13 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.rooxchicken.psychis.Psychis;
+import com.rooxchicken.psychis.Abilities.Enil;
 
 public class Enil_Polarity extends Task
 {
     private Psychis plugin;
     private Player player;
+    private Enil enil;
     private Location start;
 
     private ArrayList<LivingEntity> shocked;
@@ -39,11 +41,12 @@ public class Enil_Polarity extends Task
 
     private Color[] colors;
 
-    public Enil_Polarity(Psychis _plugin, Player _player)
+    public Enil_Polarity(Psychis _plugin, Player _player, Enil _enil)
     {
         super(_plugin);
         plugin = _plugin;
         player = _player;
+        enil = _enil;
         start = player.getLocation().clone();
         tickThreshold = 1;
 
@@ -77,7 +80,8 @@ public class Enil_Polarity extends Task
                 if(!shocked.contains(e))
                 {
                     LivingEntity entity = (LivingEntity)e;
-                    entity.damage(14);
+                    enil.deadly = true;
+                    entity.damage(14, player);
                     entity.getWorld().strikeLightning(entity.getLocation());
                     shocked.add(entity);
                 }
@@ -127,5 +131,6 @@ public class Enil_Polarity extends Task
     public void onCancel()
     {
         player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 200, shocked.size() * 2));
+        enil.deadly = false;
     }
 }

@@ -34,6 +34,8 @@ public class Dolus extends Ability
         super(_plugin, _player);
         plugin = _plugin;
         player = _player;
+
+        type = 5;
     }
 
     @Override

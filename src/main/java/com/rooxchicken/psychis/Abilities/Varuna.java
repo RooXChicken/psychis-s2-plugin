@@ -35,6 +35,7 @@ public class Varuna extends Ability implements Listener
         super(_plugin, _player);
         plugin = _plugin;
         player = _player;
+        type = 0;
     }
 
     @Override

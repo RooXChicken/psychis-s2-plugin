@@ -42,6 +42,8 @@ public class Enil extends Ability implements Listener
         super(_plugin, _player);
         plugin = _plugin;
         player = _player;
+
+        type = 2;
     }
 
     @Override
@@ -64,7 +66,7 @@ public class Enil extends Ability implements Listener
             if(entity != null)
             {
                 if(entity instanceof LivingEntity)
-                    ((LivingEntity)entity).damage(8);
+                    ((LivingEntity)entity).damage(8, player);
                 entity.getWorld().strikeLightning(entity.getLocation());
                 if(entity instanceof Player)
                 {
@@ -107,7 +109,7 @@ public class Enil extends Ability implements Listener
         if(damage > 100)
         {
             damage = 0;
-            Psychis.tasks.add(new Enil_Polarity(plugin, player));
+            Psychis.tasks.add(new Enil_Polarity(plugin, player, this));
             charging = false;
         }
     }

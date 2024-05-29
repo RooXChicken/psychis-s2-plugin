@@ -21,6 +21,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
@@ -67,6 +68,7 @@ public class Psychis extends JavaPlugin implements Listener
     public static NamespacedKey ability2CooldownKey;
 
     private HashMap<Player, Ability> playerAbilities;
+    private HashMap<Player, Player> damagedPlayers;
 
     public static ArrayList<Task> tasks;
 
@@ -82,6 +84,7 @@ public class Psychis extends JavaPlugin implements Listener
         ability2CooldownKey = new NamespacedKey(this, "ability2Cooldown");
 
         playerAbilities = new HashMap<Player, Ability>();
+        damagedPlayers = new HashMap<Player, Player>();
 
         getServer().getPluginManager().registerEvents(this, this);
         
@@ -129,6 +132,8 @@ public class Psychis extends JavaPlugin implements Listener
                     t.onCancel();
                     tasks.remove(t);
                 }
+
+                damagedPlayers.clear();
             }
         }, 0, 1);
 
@@ -176,6 +181,35 @@ public class Psychis extends JavaPlugin implements Listener
     {
         if(event.getReason().equals("Kicked for spamming"))
             event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void addToDeathMessage(EntityDamageByEntityEvent event)
+    {
+        if(!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player))
+            return;
+
+        damagedPlayers.put((Player)event.getEntity(), (Player)event.getDamager());
+    }
+
+    @EventHandler
+    public void customDeathMessages(PlayerDeathEvent event)
+    {
+        if(!damagedPlayers.containsKey(event.getEntity()))
+            return;
+
+        if(getPlayerAbility(damagedPlayers.get(event.getEntity())).deadly)
+        {
+            switch(getPlayerAbility(damagedPlayers.get(event.getEntity())).type)
+            {
+                case 1:
+                    event.setDeathMessage(event.getEntity().getName() + " got torched by " + damagedPlayers.get(event.getEntity()).getName());
+                    break;
+                case 2:
+                    event.setDeathMessage(event.getEntity().getName() + " got shocked by " + damagedPlayers.get(event.getEntity()).getName());
+                    break;
+            }
+        }
     }
 
     public Ability getPlayerAbility(Player player)

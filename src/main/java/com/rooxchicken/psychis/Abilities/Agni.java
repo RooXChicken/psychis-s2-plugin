@@ -33,6 +33,8 @@ public class Agni extends Ability
         super(_plugin, _player);
         plugin = _plugin;
         player = _player;
+
+        type = 1;
     }
 
     @Override
@@ -82,7 +84,7 @@ public class Agni extends Ability
             case 2:
                 if(ticks == -1)
                     return;
-                plugin.tasks.add(new Agni_Cinder(plugin, player, dmg));
+                plugin.tasks.add(new Agni_Cinder(plugin, player, this, dmg));
                 Agni_Cinder.stopGlow(player);
                 player.getWorld().playSound(player.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 1);
                 ticks = -1;

@@ -55,7 +55,7 @@ public class Ymir_Biome extends Task
                 entity.setFreezeTicks(200);
 
                 if(t % 20 == 0)
-                    entity.damage(3);
+                    entity.damage(3, player);
             }
         }
 

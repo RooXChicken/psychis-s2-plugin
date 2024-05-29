@@ -48,6 +48,8 @@ public class Boreas extends Ability implements Listener
         super(_plugin, _player);
         plugin = _plugin;
         player = _player;
+
+        type = 3;
     }
 
     @Override
