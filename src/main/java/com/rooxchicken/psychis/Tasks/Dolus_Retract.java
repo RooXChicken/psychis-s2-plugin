@@ -16,20 +16,25 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.rooxchicken.psychis.Psychis;
+import com.rooxchicken.psychis.Abilities.Dolus;
 
 public class Dolus_Retract extends Task
 {
     private Psychis plugin;
     private Player player;
+    private Dolus dolus;
 
     private int t = 0;
 
-    public Dolus_Retract(Psychis _plugin, Player _player)
+    public Dolus_Retract(Psychis _plugin, Player _player, Dolus _dolus)
     {
         super(_plugin);
         plugin = _plugin;
         player = _player;
+        dolus = _dolus;
         tickThreshold = 1;
+
+        //dolus.deadly = true;
     }
 
     @Override
@@ -52,6 +57,6 @@ public class Dolus_Retract extends Task
     @Override
     public void onCancel()
     {
-        
+        dolus.deadly = false;
     }
 }

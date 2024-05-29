@@ -13,11 +13,13 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import com.rooxchicken.psychis.Psychis;
+import com.rooxchicken.psychis.Abilities.Dolus;
 
 public class Dolus_Crush extends Task
 {
     private Psychis plugin;
     private Player player;
+    private Dolus dolus;
     private Location start;
     private int t;
     private double size = 0;
@@ -25,11 +27,12 @@ public class Dolus_Crush extends Task
     private double[] cacheX;
     private double[] cacheZ;
 
-    public Dolus_Crush(Psychis _plugin, Player _player)
+    public Dolus_Crush(Psychis _plugin, Player _player, Dolus _dolus)
     {
         super(_plugin);
         plugin = _plugin;
         player = _player;
+        dolus = _dolus;
         start = player.getEyeLocation();
         tickThreshold = 1;
 
@@ -44,6 +47,8 @@ public class Dolus_Crush extends Task
 
         player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ILLUSIONER_CAST_SPELL, 1, 0.2f);
         player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1, 0.8f);
+
+        dolus.deadly = true;
     }
 
     @Override
@@ -95,5 +100,11 @@ public class Dolus_Crush extends Task
 
         if(++t > 140)
             cancel = true;
+    }
+
+    @Override
+    public void onCancel()
+    {
+        dolus.deadly = false;
     }
 }
