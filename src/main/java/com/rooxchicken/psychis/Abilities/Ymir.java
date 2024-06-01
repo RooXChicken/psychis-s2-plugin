@@ -52,6 +52,9 @@ public class Ymir extends Ability implements Listener
         player = _player;
 
         type = 4;
+
+        cooldown1 = 60;
+        cooldown2 = 120;
     }
 
     @Override
@@ -67,7 +70,7 @@ public class Ymir extends Ability implements Listener
         {
             if(shield.cancel)
             {
-                plugin.setCooldownForce(player, 60, Psychis.ability1CooldownKey);
+                plugin.setCooldownForce(player, cooldown1, Psychis.ability1CooldownKey);
                 shield = null;
             }
         }
@@ -92,7 +95,7 @@ public class Ymir extends Ability implements Listener
     {
         if(state == 0)
         {
-            if(!plugin.setCooldown(player, 120, Psychis.ability2CooldownKey))
+            if(!plugin.setCooldown(player, cooldown2, Psychis.ability2CooldownKey))
                 return;
 
             Psychis.tasks.add(new Ymir_Biome(plugin, player, this));

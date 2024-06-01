@@ -38,6 +38,9 @@ public class Dolus extends Ability
         player = _player;
 
         type = 5;
+
+        cooldown1 = 45;
+        cooldown2 = 120;
     }
 
     @Override
@@ -49,7 +52,7 @@ public class Dolus extends Ability
     @Override
     public void activateFirstAbility(int state)
     {
-        if(!plugin.setCooldown(player, 45, Psychis.ability1CooldownKey))
+        if(!plugin.setCooldown(player, cooldown1, Psychis.ability1CooldownKey))
             return;
         
         Psychis.tasks.add(new Dolus_Retract(plugin, player, this));
@@ -58,7 +61,7 @@ public class Dolus extends Ability
     @Override
     public void activateSecondAbility(int state)
     {
-        if(!plugin.setCooldown(player, 120, Psychis.ability2CooldownKey))
+        if(!plugin.setCooldown(player, cooldown2, Psychis.ability2CooldownKey))
                 return;
         Psychis.tasks.add(new Dolus_Crush(plugin, player, this));
     }

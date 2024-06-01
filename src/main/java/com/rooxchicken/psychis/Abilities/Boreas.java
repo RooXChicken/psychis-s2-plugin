@@ -50,6 +50,9 @@ public class Boreas extends Ability implements Listener
         player = _player;
 
         type = 3;
+
+        cooldown1 = 30;
+        cooldown2 = 60;
     }
 
     @Override
@@ -69,7 +72,7 @@ public class Boreas extends Ability implements Listener
     {
         if(state == 0)
         {
-            if(!plugin.setCooldown(player, 30, Psychis.ability1CooldownKey))
+            if(!plugin.setCooldown(player, cooldown1, Psychis.ability1CooldownKey))
                 return;
             player.setVelocity(player.getLocation().getDirection().multiply(-2.1));
             player.getWorld().spawnParticle(Particle.REDSTONE, player.getLocation(), 100, 0.5f, 0.2f, 0.5f, new Particle.DustOptions(Color.WHITE, 1f));
@@ -87,7 +90,7 @@ public class Boreas extends Ability implements Listener
         
         if(state == 0)
         {
-            if(!plugin.setCooldown(player, 60, Psychis.ability2CooldownKey))
+            if(!plugin.setCooldown(player, cooldown2, Psychis.ability2CooldownKey))
                 return;
 
             vortex = new Boreas_Vortex(plugin, player);

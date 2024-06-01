@@ -28,6 +28,10 @@ commands:
       description: Second ability END
       usage: /hdn_ability2_end
 
+   hdn_verifymod:
+      description: Client verification of mod
+      usage: /hdn_verifymod
+
    ptest:
       description: Particle testing
       usage: /ptest

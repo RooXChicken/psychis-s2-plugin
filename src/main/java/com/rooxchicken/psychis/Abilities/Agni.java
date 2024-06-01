@@ -35,6 +35,9 @@ public class Agni extends Ability
         player = _player;
 
         type = 1;
+
+        cooldown1 = 30;
+        cooldown2 = 90;
     }
 
     @Override
@@ -48,7 +51,7 @@ public class Agni extends Ability
     {
         if(state == 0)
         {
-            if(!plugin.setCooldown(player, 30, Psychis.ability1CooldownKey))
+            if(!plugin.setCooldown(player, cooldown1, Psychis.ability1CooldownKey))
                 return;
             plugin.tasks.add(new Agni_HeatSeek(plugin, player));
         }
@@ -58,7 +61,7 @@ public class Agni extends Ability
     public void activateSecondAbility(int state)
     {
         if(ticks == -1)
-            if(!plugin.setCooldown(player, 90, Psychis.ability2CooldownKey))
+            if(!plugin.setCooldown(player, cooldown2, Psychis.ability2CooldownKey))
                 return;
 
         double dmg = ticks/6.0;

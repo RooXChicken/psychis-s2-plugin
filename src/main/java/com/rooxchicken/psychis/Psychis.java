@@ -29,6 +29,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryEvent;
 import org.bukkit.event.inventory.InventoryInteractEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerCommandSendEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -57,6 +59,7 @@ import com.rooxchicken.psychis.Commands.ParticleTest;
 import com.rooxchicken.psychis.Commands.ResetCooldown;
 import com.rooxchicken.psychis.Commands.SecondAbility;
 import com.rooxchicken.psychis.Commands.SetAbility;
+import com.rooxchicken.psychis.Commands.VerifyMod;
 import com.rooxchicken.psychis.Tasks.CooldownTask;
 import com.rooxchicken.psychis.Tasks.Task;
 
@@ -71,11 +74,15 @@ public class Psychis extends JavaPlugin implements Listener
     private HashMap<Player, Player> damagedPlayers;
 
     public static ArrayList<Task> tasks;
+    public ArrayList<Player> hasMod;
+
+    private List<String> blockedCommands = new ArrayList<>();
 
     @Override
     public void onEnable()
     {
         tasks = new ArrayList<Task>();
+        hasMod = new ArrayList<Player>();
         tasks.add(new CooldownTask(this));
 
         abilityKey = new NamespacedKey(this, "abilityKey");
@@ -91,11 +98,24 @@ public class Psychis extends JavaPlugin implements Listener
         this.getCommand("hdn_ability1_srt").setExecutor(new FirstAbility(this, 0));
         this.getCommand("hdn_ability2_srt").setExecutor(new SecondAbility(this, 0));
 
+        blockedCommands.add("hdn_ability1_srt");
+		blockedCommands.add("hdn_ability2_srt");
+
         this.getCommand("hdn_ability1_rpt").setExecutor(new FirstAbility(this, 1));
         this.getCommand("hdn_ability2_rpt").setExecutor(new SecondAbility(this, 1));
 
+        blockedCommands.add("hdn_ability1_rpt");
+		blockedCommands.add("hdn_ability2_rpt");
+
         this.getCommand("hdn_ability1_end").setExecutor(new FirstAbility(this, 2));
         this.getCommand("hdn_ability2_end").setExecutor(new SecondAbility(this, 2));
+
+        blockedCommands.add("hdn_ability1_end");
+		blockedCommands.add("hdn_ability2_end");
+
+        this.getCommand("hdn_verifymod").setExecutor(new VerifyMod(this));
+
+        blockedCommands.add("hdn_verifymod");
 
         this.getCommand("ptest").setExecutor(new ParticleTest(this));
         this.getCommand("resetcooldown").setExecutor(new ResetCooldown(this));
@@ -165,14 +185,13 @@ public class Psychis extends JavaPlugin implements Listener
     {
         if(playerAbilities.containsKey(e.getPlayer()))
             playerAbilities.remove(e.getPlayer());
+
+        hasMod.remove(e.getPlayer());
     }
 
     @EventHandler
 	private void onPlayerTab(PlayerCommandSendEvent e)
     {
-		List<String> blockedCommands = new ArrayList<>();
-		blockedCommands.add("hdn_ability1");
-		blockedCommands.add("hdn_ability2");
 		e.getCommands().removeAll(blockedCommands);
 	}
     
@@ -333,7 +352,7 @@ public class Psychis extends JavaPlugin implements Listener
      * 2: mode: (0 is for login. marks ability type) (1 marks ability cooldown)
      * 2.0_1: marks ability type
      * 2.1_1: ability type (0 for primary, 1 for unlockable)
-     * 2.1_2: cooldown length (in ticks)
+     * 2.1_2_M: cooldown length (in ticks)
      */
     public static void sendPlayerData(Player player, String data)
     {
@@ -384,5 +403,10 @@ public class Psychis extends JavaPlugin implements Listener
             return max;
         else
             return v;
+    }
+
+    public void verifyMod(Player player)
+    {
+        hasMod.add(player);
     }
 }

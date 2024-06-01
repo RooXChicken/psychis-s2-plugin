@@ -45,6 +45,9 @@ public class Enil extends Ability implements Listener
         player = _player;
 
         type = 2;
+        
+        cooldown1 = 45;
+        cooldown2 = 120;
     }
 
     @Override
@@ -61,7 +64,7 @@ public class Enil extends Ability implements Listener
     {
         if(state == 0)
         {
-            if(!plugin.setCooldown(player, 45, Psychis.ability1CooldownKey))
+            if(!plugin.setCooldown(player, cooldown1, Psychis.ability1CooldownKey))
                 return;
             Entity entity = plugin.getTarget(player, 50);
             deadly = true;
@@ -90,7 +93,7 @@ public class Enil extends Ability implements Listener
     @Override
     public void activateSecondAbility(int state)
     {
-        if(!plugin.setCooldown(player, 120, Psychis.ability2CooldownKey))
+        if(!plugin.setCooldown(player, cooldown2, Psychis.ability2CooldownKey))
             return;
 
         charging = true;
