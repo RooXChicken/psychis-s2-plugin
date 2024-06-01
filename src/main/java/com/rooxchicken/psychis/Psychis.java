@@ -409,4 +409,17 @@ public class Psychis extends JavaPlugin implements Listener
     {
         hasMod.add(player);
     }
+
+    /*
+     * TODO:
+     * All particle trails //add inside cooldowntask
+     * Varuna first ability (all) and second ability (all)
+     * Midas first ability (all) and second ability (sound and particles)
+     * Block second abilities until they unlock it //new namespacedkey for storing this
+     * Lose second ability on death
+     * Ability to unlock second ability
+     * Ability selection //either plugin side or client side
+     * Re-roll item
+     * Broadcast second ability unlock
+     */
 }
