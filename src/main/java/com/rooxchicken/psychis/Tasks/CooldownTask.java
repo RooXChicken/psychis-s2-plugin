@@ -38,8 +38,8 @@ public class CooldownTask extends Task
             data.set(Psychis.ability1CooldownKey, PersistentDataType.INTEGER, cooldown1);
             data.set(Psychis.ability2CooldownKey, PersistentDataType.INTEGER, cooldown2);
 
-            Psychis.sendPlayerData(player, "1_0_" + cooldown1/2 + "_" + plugin.getPlayerAbility(player).cooldown1);
-            Psychis.sendPlayerData(player, "1_1_" + cooldown2/2 + "_" + plugin.getPlayerAbility(player).cooldown2);
+            Psychis.sendPlayerData(player, "1_0_" + cooldown1 + "_" + plugin.getPlayerAbility(player).cooldown1);
+            Psychis.sendPlayerData(player, "1_1_" + cooldown2 + "_" + plugin.getPlayerAbility(player).cooldown2);
         }
     }
 }

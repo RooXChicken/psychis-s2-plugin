@@ -40,6 +40,7 @@ public class Dolus_Retract extends Task
     @Override
     public void run()
     {
+        player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 10, 13));
         for(Object e : Psychis.getNearbyEntities(player.getLocation(), 8))
         {
             if(e instanceof Entity && player != e)
