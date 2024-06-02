@@ -82,13 +82,10 @@ public class Dolus_Crush extends Task
 
         for(Object o : Psychis.getNearbyEntities(start, (int)Math.ceil(size)))
         {
-            if(o instanceof Entity && !o.equals(player))
+            if(o instanceof Entity && o != player)
             {
                 ((Entity)o).setVelocity(((Entity)o).getVelocity().multiply(0.4));
-                if(o instanceof Player)
-                {
-                    ((Player)o).addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 10, 2));
-                }
+                ((Player)o).addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 10, 2));
             }
             // if(o instanceof Player))
             // {

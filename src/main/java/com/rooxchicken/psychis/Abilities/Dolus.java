@@ -63,6 +63,7 @@ public class Dolus extends Ability
     {
         if(!plugin.setCooldown(player, cooldown2, Psychis.ability2CooldownKey))
             return;
+        
         Psychis.tasks.add(new Dolus_Crush(plugin, player, this));
     }
 }
