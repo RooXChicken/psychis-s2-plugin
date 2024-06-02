@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import com.rooxchicken.psychis.Psychis;
+import com.rooxchicken.psychis.Abilities.Ability;
 
 public class SecondAbility implements CommandExecutor
 {
@@ -21,7 +22,9 @@ public class SecondAbility implements CommandExecutor
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
     {
-        plugin.getPlayerAbility(Bukkit.getPlayer(sender.getName())).activateSecondAbility(state);
+        Ability ability = plugin.getPlayerAbility(Bukkit.getPlayer(sender.getName()));
+        if(ability != null)
+            ability.activateSecondAbility(state);
 
         return true;
     }

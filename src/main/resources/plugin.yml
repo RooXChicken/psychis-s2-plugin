@@ -32,6 +32,14 @@ commands:
       description: Client verification of mod
       usage: /hdn_verifymod
 
+   hdn_pickability:
+      description: Picks the ability from the gui
+      usage: /hdn_pickability <ability>
+
+   selectability:
+      description: Opens the ability selector (only if closed)
+      usage: /selectability
+
    ptest:
       description: Particle testing
       usage: /ptest

@@ -62,7 +62,7 @@ public class Dolus extends Ability
     public void activateSecondAbility(int state)
     {
         if(!plugin.setCooldown(player, cooldown2, Psychis.ability2CooldownKey))
-                return;
+            return;
         Psychis.tasks.add(new Dolus_Crush(plugin, player, this));
     }
 }

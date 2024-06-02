@@ -56,8 +56,10 @@ import com.rooxchicken.psychis.Abilities.Varuna;
 import com.rooxchicken.psychis.Abilities.Ymir;
 import com.rooxchicken.psychis.Commands.FirstAbility;
 import com.rooxchicken.psychis.Commands.ParticleTest;
+import com.rooxchicken.psychis.Commands.PickAbility;
 import com.rooxchicken.psychis.Commands.ResetCooldown;
 import com.rooxchicken.psychis.Commands.SecondAbility;
+import com.rooxchicken.psychis.Commands.SelectAbility;
 import com.rooxchicken.psychis.Commands.SetAbility;
 import com.rooxchicken.psychis.Commands.VerifyMod;
 import com.rooxchicken.psychis.Tasks.CooldownTask;
@@ -114,8 +116,11 @@ public class Psychis extends JavaPlugin implements Listener
 		blockedCommands.add("hdn_ability2_end");
 
         this.getCommand("hdn_verifymod").setExecutor(new VerifyMod(this));
+        this.getCommand("hdn_pickability").setExecutor(new PickAbility(this));
+        this.getCommand("selectability").setExecutor(new SelectAbility(this));
 
         blockedCommands.add("hdn_verifymod");
+        blockedCommands.add("hdn_pickability");
 
         this.getCommand("ptest").setExecutor(new ParticleTest(this));
         this.getCommand("resetcooldown").setExecutor(new ResetCooldown(this));
@@ -163,6 +168,8 @@ public class Psychis extends JavaPlugin implements Listener
     @EventHandler
     private void addPlayerAbility(PlayerJoinEvent e)
     {
+        PersistentDataContainer data = e.getPlayer().getPersistentDataContainer();
+        data.remove(abilityKey); //REMOVE
         addPlayerAbility(e.getPlayer());
     }
 
@@ -170,14 +177,28 @@ public class Psychis extends JavaPlugin implements Listener
     {
         if(playerAbilities.containsKey(player))
             playerAbilities.remove(player);
+        
         PersistentDataContainer data = player.getPersistentDataContainer();
 
+        sendAbilityDesc(player);
+
         if(!data.has(abilityKey, PersistentDataType.INTEGER))
-            data.set(abilityKey, PersistentDataType.INTEGER, 1);
+        {
+            sendPlayerData(player, "3");
+            return;
+        }
         
         playerAbilities.put(player, nameToAbility(player, data.get(abilityKey, PersistentDataType.INTEGER)));
         sendPlayerData(player, "0_" + data.get(abilityKey, PersistentDataType.INTEGER));
-            
+    }
+
+    //format: name_index_ability1 name_ability1 desc (tooltip)_ability2 name_ability2 desc (tooltip)_unlock-requirements
+    private void sendAbilityDesc(Player player)
+    {
+        sendPlayerData(player, "2_.");
+        sendPlayerData(player, "2_Varuna_0_Condiut Power_Typhoon (COOLDOWN: 30s)_Creates a large ring of light blue+particles that spikes entities into+the air, dealing damage.+(BUFFED IN WATER/RAIN)_WaterJet (COOLDOWN: 1m)_Shoots a large water beam that+pushes entities back and deals+large damage._Build a condiut (will be deleted after)");
+        sendPlayerData(player, "2_Agni_1_Fire Resistance_HeatSeek (COOLDOWN: 30s)_Releases a seeking shockwave that+scans the area for players, lighting+them on fire and giving them glowing.+Repeats until the scan is over._Cinder (COOLDOWN: 1m 30s)_Shoots a fire arrow that does+more damage the longer its held.+(BUFFED WHEN ON FIRE/IN NETHER)_Bring a ghast into the overworld");
+        sendPlayerData(player, "2_Enil_2_Haste 2_Jolt (COOLDOWN: 45s)_Shoot a beam of lighting that gives+the target mining fatigue 3 and+slowness 3._Polarity (COOLDOWN: 2m)_Begins to charge the player with+electricity whenever attacking an+entity. Shoots an electric shockwave+when enough damage is dealt._Strike a creeper with Jolt while it's thunderstorming");
     }
 
     @EventHandler
@@ -192,6 +213,8 @@ public class Psychis extends JavaPlugin implements Listener
     @EventHandler
 	private void onPlayerTab(PlayerCommandSendEvent e)
     {
+        if(e.getPlayer().getPersistentDataContainer().has(abilityKey, PersistentDataType.INTEGER))
+            e.getCommands().remove("selectability");
 		e.getCommands().removeAll(blockedCommands);
 	}
     
@@ -349,10 +372,12 @@ public class Psychis extends JavaPlugin implements Listener
      * _ seperates parts of data
      * 
      * 1: psyz91_ marks the signature for data
-     * 2: mode: (0 is for login. marks ability type) (1 marks ability cooldown)
+     * 2: mode: (0 is for login. marks ability type) (1 marks ability cooldown) (2 sends ability data) (3 opens selection dialogue)
      * 2.0_1: marks ability type
      * 2.1_1: ability type (0 for primary, 1 for unlockable)
      * 2.1_2_M: cooldown length (in ticks)
+     * 2.2 format: name_index_ability1 name_ability1 desc (tooltip)_ability2 name_ability2 desc (tooltip)_unlock-requirements
+     * 2.3: open selection dialogue (preceded by sending each ability)
      */
     public static void sendPlayerData(Player player, String data)
     {
@@ -407,7 +432,8 @@ public class Psychis extends JavaPlugin implements Listener
 
     public void verifyMod(Player player)
     {
-        hasMod.add(player);
+        if(!hasMod.contains(player))
+            hasMod.add(player);
     }
 
     /*

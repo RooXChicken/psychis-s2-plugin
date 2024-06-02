@@ -23,23 +23,26 @@ public class CooldownTask extends Task
     {
         for(Player player : plugin.hasMod)
         {
-            PersistentDataContainer data = player.getPersistentDataContainer();
+            if(plugin.getPlayerAbility(player) != null)
+            {
+                PersistentDataContainer data = player.getPersistentDataContainer();
 
-            plugin.checkHasCooldown(data);
+                plugin.checkHasCooldown(data);
 
-            int cooldown1 = data.get(Psychis.ability1CooldownKey, PersistentDataType.INTEGER);
-            int cooldown2 = data.get(Psychis.ability2CooldownKey, PersistentDataType.INTEGER);
+                int cooldown1 = data.get(Psychis.ability1CooldownKey, PersistentDataType.INTEGER);
+                int cooldown2 = data.get(Psychis.ability2CooldownKey, PersistentDataType.INTEGER);
 
-            if(cooldown1 > 0)
-                cooldown1--;
-            if(cooldown2 > 0)
-                cooldown2--;
+                if(cooldown1 > 0)
+                    cooldown1--;
+                if(cooldown2 > 0)
+                    cooldown2--;
 
-            data.set(Psychis.ability1CooldownKey, PersistentDataType.INTEGER, cooldown1);
-            data.set(Psychis.ability2CooldownKey, PersistentDataType.INTEGER, cooldown2);
+                data.set(Psychis.ability1CooldownKey, PersistentDataType.INTEGER, cooldown1);
+                data.set(Psychis.ability2CooldownKey, PersistentDataType.INTEGER, cooldown2);
 
-            Psychis.sendPlayerData(player, "1_0_" + cooldown1 + "_" + plugin.getPlayerAbility(player).cooldown1);
-            Psychis.sendPlayerData(player, "1_1_" + cooldown2 + "_" + plugin.getPlayerAbility(player).cooldown2);
+                Psychis.sendPlayerData(player, "1_0_" + (cooldown1/2) + "_" + plugin.getPlayerAbility(player).cooldown1);
+                Psychis.sendPlayerData(player, "1_1_" + (cooldown2/2) + "_" + plugin.getPlayerAbility(player).cooldown2);
+            }
         }
     }
 }
