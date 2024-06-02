@@ -40,13 +40,14 @@ public class Dolus_Retract extends Task
     @Override
     public void run()
     {
-        player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 10, 13));
         for(Object e : Psychis.getNearbyEntities(player.getLocation(), 8))
         {
             if(e instanceof Entity && player != e)
             {
                 Entity entity = (Entity)e;
                 //double distance = 8-Psychis.ClampD(player.getLocation().distance(entity.getLocation()), 0, 8);
+                if(e instanceof Player)
+                    ((Player)e).addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 10, 1));
                 entity.setVelocity(entity.getLocation().clone().subtract(player.getLocation()).toVector().multiply(-0.1));
             }
         }

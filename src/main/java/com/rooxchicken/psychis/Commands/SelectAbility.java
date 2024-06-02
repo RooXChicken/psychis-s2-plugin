@@ -25,7 +25,7 @@ public class SelectAbility implements CommandExecutor
         Player player = Bukkit.getPlayer(sender.getName());
 
         PersistentDataContainer data = player.getPersistentDataContainer();
-        if(data.has(Psychis.abilityKey, PersistentDataType.INTEGER))
+        if(data.has(Psychis.abilityKey, PersistentDataType.INTEGER) && data.get(Psychis.abilityKey, PersistentDataType.INTEGER) != -1)
         {
             if(sender.isOp())
                 sender.sendMessage("This menu was force opened because you are opped. This menu would not have opened if you weren't op.");

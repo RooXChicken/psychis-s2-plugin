@@ -85,17 +85,12 @@ public class Dolus_Crush extends Task
             if(o instanceof Entity && o != player)
             {
                 ((Entity)o).setVelocity(((Entity)o).getVelocity().multiply(0.4));
-                ((Player)o).addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 10, 2));
+                if(o instanceof Player)
+                    ((Player)o).addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 10, 2));
             }
-            // if(o instanceof Player))
-            // {
-            //     Player entity = (Player)o;
-            //     entity.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 2, 255));
-            //     entity.setVelocity(new Vector(0, -10, 0));
-            // }
         }
 
-        if(++t > 140)
+        if(++t > 200)
             cancel = true;
     }
 
