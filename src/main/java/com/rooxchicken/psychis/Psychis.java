@@ -68,6 +68,7 @@ import com.rooxchicken.psychis.Tasks.Task;
 public class Psychis extends JavaPlugin implements Listener
 {
     public static NamespacedKey abilityKey;
+    public static NamespacedKey secondUnlockedKey;
 
     public static NamespacedKey ability1CooldownKey;
     public static NamespacedKey ability2CooldownKey;
@@ -88,6 +89,7 @@ public class Psychis extends JavaPlugin implements Listener
         tasks.add(new CooldownTask(this));
 
         abilityKey = new NamespacedKey(this, "abilityKey");
+        secondUnlockedKey = new NamespacedKey(this, "secondUnlocked");
 
         ability1CooldownKey = new NamespacedKey(this, "ability1Cooldown");
         ability2CooldownKey = new NamespacedKey(this, "ability2Cooldown");
@@ -187,9 +189,12 @@ public class Psychis extends JavaPlugin implements Listener
             sendPlayerData(player, "3");
             return;
         }
+
+        if(!data.has(secondUnlockedKey, PersistentDataType.BOOLEAN))
+            data.set(secondUnlockedKey, PersistentDataType.BOOLEAN, true);
         
         playerAbilities.put(player, nameToAbility(player, data.get(abilityKey, PersistentDataType.INTEGER)));
-        sendPlayerData(player, "0_" + data.get(abilityKey, PersistentDataType.INTEGER));
+        sendPlayerData(player, "0_" + data.get(abilityKey, PersistentDataType.INTEGER) + "_" + data.get(secondUnlockedKey, PersistentDataType.BOOLEAN));
     }
 
     //format: name_index_ability1 name_ability1 desc (tooltip)_ability2 name_ability2 desc (tooltip)_unlock-requirements

@@ -22,7 +22,7 @@ public class Dolus_Crush extends Task
     private Dolus dolus;
     private Location start;
     private int t;
-    private double size = 0;
+    private double size = 8;
 
     private double[] cacheX;
     private double[] cacheZ;
@@ -34,6 +34,8 @@ public class Dolus_Crush extends Task
         player = _player;
         dolus = _dolus;
         start = player.getEyeLocation();
+        start.subtract(0, 3, 0);
+        
         tickThreshold = 1;
 
         cacheX = new double[180];
@@ -41,8 +43,9 @@ public class Dolus_Crush extends Task
 
         for(int i = 0; i < 180; i++)
         {
-            cacheX[i] = -1;
-            cacheZ[i] = -1;
+            double rad = Math.toRadians(i*2);
+            cacheX[i] = Math.sin(rad);
+            cacheZ[i] = Math.cos(rad);
         }
 
         player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ILLUSIONER_CAST_SPELL, 1, 0.2f);
@@ -54,30 +57,91 @@ public class Dolus_Crush extends Task
     @Override
     public void run()
     {
-        double blockY = Psychis.getBlock(player, 40, 90).getLocation().getY() + 1.1;
-        start = player.getEyeLocation();
-        start.setY(blockY);
-        if(size < 8)
-            size += 0.3;
-        if(t % 8 == 0)
-            Psychis.tasks.add(new Dolus_CrushArrow(plugin, player, new Location(player.getWorld(), start.getX() + ((Math.random()-0.5) * size*2), start.getY() + 8, start.getZ() + ((Math.random()-0.5) * size*2))));
-        for(int i = 0; i < 180; i++)
+        // double blockY = Psychis.getBlock(player, 40, 90).getLocation().getY() + 1.1;
+        // start = player.getEyeLocation();
+        // start.subtract(0, 3, 0);
+        // int offset = (t*4) % 180;
+        // // if(size < 8)
+        // //     size += 0.3;
+        // // if(t % 8 == 0)
+        // //     Psychis.tasks.add(new Dolus_CrushArrow(plugin, player, new Location(player.getWorld(), start.getX() + ((Math.random()-0.5) * size*2), start.getY() + 8, start.getZ() + ((Math.random()-0.5) * size*2))));
+        // for(int i = 0; i < 180; i++)
+        // {
+        //     Location particlePos = start.clone();
+        //     double xOffset = 0;
+        //     double zOffset = 0;
+
+        //     double xOffset2 = 0;
+        //     double zOffset2 = 0;
+
+        //     if(i + offset > 179)
+        //         offset -= 180;
+
+        //     int kOffset = (t*4) % 180;
+
+        //     int k = (i + 90) % 180;
+
+        //     if(k + kOffset > 179)
+        //         k -= 180;
+
+        //     //Bukkit.getLogger().info(k + " " + (k+(t*4)));
+
+        //     if(cacheX[i + offset] == -1)
+        //     {
+        //         double rad = Math.toRadians(i*2);
+        //         cacheX[i + offset] = Math.sin(rad);
+        //         cacheZ[i + offset] = Math.cos(rad);
+        //     }
+
+        //     xOffset = cacheX[i + offset] * size;
+        //     zOffset = cacheZ[i + offset] * size;
+
+        //     xOffset2 = cacheX[k + kOffset] * size;
+        //     zOffset2 = cacheZ[k + kOffset] * size;
+
+        //     player.getWorld().spawnParticle(Particle.REDSTONE, particlePos.clone().add(xOffset, i/16.0, zOffset), 1, 0, 0, 0, new Particle.DustOptions(Color.PURPLE, 1f));
+        //     player.getWorld().spawnParticle(Particle.REDSTONE, particlePos.clone().add(xOffset2, i/16.0, zOffset2), 1, 0, 0, 0, new Particle.DustOptions(Color.PURPLE, 1f));
+        // }
+
+        //double blockY = Psychis.getBlock(player, 40, 90).getLocation().getY() + 1.1
+        int offset = (t*4) % 180;
+        // if(size < 8)
+        //     size += 0.3;
+        // if(t % 8 == 0)
+        //     Psychis.tasks.add(new Dolus_CrushArrow(plugin, player, new Location(player.getWorld(), start.getX() + ((Math.random()-0.5) * size*2), start.getY() + 8, start.getZ() + ((Math.random()-0.5) * size*2))));
+        //for(int i = 0; i < 180; i++)
+        int ii = (t*2) % 180;
+        for(int o = 0; o < 8; o++)
         {
+            int i = ii + o;
             Location particlePos = start.clone();
             double xOffset = 0;
             double zOffset = 0;
 
-            if(cacheX[i] == -1)
-            {
-                double rad = Math.toRadians(i*2);
-                cacheX[i] = Math.sin(rad);
-                cacheZ[i] = Math.cos(rad);
-            }
+            double xOffset2 = 0;
+            double zOffset2 = 0;
 
-            xOffset = cacheX[i] * size;
-            zOffset = cacheZ[i] * size;
+            if(i + offset > 179)
+                offset -= 180;
 
-            player.getWorld().spawnParticle(Particle.REDSTONE, particlePos.add(xOffset, 0, zOffset), 1, 0, 0, 0, new Particle.DustOptions(Color.PURPLE, 1f));
+            int kOffset = (t*4) % 180;
+
+            int k = (i + 90) % 180;
+
+            if(k + kOffset > 179)
+                k -= 180;
+
+            xOffset = cacheX[i + offset] * size;
+            zOffset = cacheZ[i + offset] * size;
+
+            xOffset2 = cacheX[k + kOffset] * size;
+            zOffset2 = cacheZ[k + kOffset] * size;
+
+            Psychis.tasks.add(new Dolus_Spiral(plugin, player, particlePos.clone().add(xOffset, 18 + o/8.0, zOffset), 1));
+            Psychis.tasks.add(new Dolus_Spiral(plugin, player, particlePos.clone().add(xOffset2, 18 + o/8.0, zOffset2), 1));
+
+            //player.getWorld().spawnParticle(Particle.REDSTONE, particlePos.clone().add(xOffset, i/16.0, zOffset), 1, 0, 0, 0, new Particle.DustOptions(Color.PURPLE, 1f));
+            //player.getWorld().spawnParticle(Particle.REDSTONE, particlePos.clone().add(xOffset2, i/16.0, zOffset2), 1, 0, 0, 0, new Particle.DustOptions(Color.PURPLE, 1f));
         }
 
         for(Object o : Psychis.getNearbyEntities(start, (int)Math.ceil(size)))
