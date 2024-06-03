@@ -85,6 +85,8 @@ public class Boreas extends Ability implements Listener
     @Override
     public void activateSecondAbility(int state)
     {
+        if(!plugin.secondUnlocked(player))
+            return;
         if(vortex != null && vortex.cancel)
             vortex = null;
         

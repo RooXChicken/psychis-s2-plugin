@@ -61,6 +61,9 @@ public class Dolus extends Ability
     @Override
     public void activateSecondAbility(int state)
     {
+        if(!plugin.secondUnlocked(player))
+            return;
+            
         if(!plugin.setCooldown(player, cooldown2, Psychis.ability2CooldownKey))
             return;
         

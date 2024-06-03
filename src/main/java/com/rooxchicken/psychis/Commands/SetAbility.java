@@ -25,6 +25,10 @@ public class SetAbility implements CommandExecutor
 
         Player player = Bukkit.getPlayer(sender.getName());
         player.getPersistentDataContainer().set(Psychis.abilityKey, PersistentDataType.INTEGER, Integer.parseInt(args[0]));
+        if(args.length > 1)
+            player.getPersistentDataContainer().set(Psychis.secondUnlockedKey, PersistentDataType.BOOLEAN, Boolean.parseBoolean(args[1]));
+        else
+            player.getPersistentDataContainer().set(Psychis.secondUnlockedKey, PersistentDataType.BOOLEAN, false);
         plugin.addPlayerAbility(player);
 
         return true;

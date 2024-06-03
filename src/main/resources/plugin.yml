@@ -50,6 +50,6 @@ commands:
 
    setability:
       description: Sets the selected ability
-      usage: /setability <ability>
+      usage: /setability <ability> <secondunlocked>
 
 depend: [ ProtocolLib ]

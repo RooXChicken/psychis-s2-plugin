@@ -93,6 +93,8 @@ public class Ymir extends Ability implements Listener
     @Override
     public void activateSecondAbility(int state)
     {
+        if(!plugin.secondUnlocked(player))
+            return;
         if(state == 0)
         {
             if(!plugin.setCooldown(player, cooldown2, Psychis.ability2CooldownKey))

@@ -53,6 +53,7 @@ public class Varuna extends Ability implements Listener
     @Override
     public void activateSecondAbility(int state)
     {
-        
+        if(!plugin.secondUnlocked(player))
+            return;
     }
 }

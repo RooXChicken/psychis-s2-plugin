@@ -191,7 +191,7 @@ public class Psychis extends JavaPlugin implements Listener
         }
 
         if(!data.has(secondUnlockedKey, PersistentDataType.BOOLEAN))
-            data.set(secondUnlockedKey, PersistentDataType.BOOLEAN, true);
+            data.set(secondUnlockedKey, PersistentDataType.BOOLEAN, false);
         
         playerAbilities.put(player, nameToAbility(player, data.get(abilityKey, PersistentDataType.INTEGER)));
         sendPlayerData(player, "0_" + data.get(abilityKey, PersistentDataType.INTEGER) + "_" + data.get(secondUnlockedKey, PersistentDataType.BOOLEAN));
@@ -416,11 +416,21 @@ public class Psychis extends JavaPlugin implements Listener
     {
         PersistentDataContainer data = player.getPersistentDataContainer();
         checkHasCooldown(data);
+        
         if(data.get(key, PersistentDataType.INTEGER) > 0)
             return false;
 
         setCooldownForce(player, cooldown, key);
         return true;
+    }
+
+    public boolean secondUnlocked(Player player)
+    {
+        PersistentDataContainer data = player.getPersistentDataContainer();
+        if(data.has(secondUnlockedKey, PersistentDataType.BOOLEAN))
+            return data.get(secondUnlockedKey, PersistentDataType.BOOLEAN);
+        
+        return false;
     }
 
     public void setCooldownForce(Player player, int cooldown, NamespacedKey key)
