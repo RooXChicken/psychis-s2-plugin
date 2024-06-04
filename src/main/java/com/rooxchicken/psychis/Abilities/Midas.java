@@ -41,6 +41,7 @@ public class Midas extends Ability
         plugin = _plugin;
         player = _player;
         type = 6;
+        name = "Midas";
     }
 
     @Override

@@ -8,15 +8,19 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World.Environment;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.Container;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
@@ -52,6 +56,7 @@ public class Ymir extends Ability implements Listener
         player = _player;
 
         type = 4;
+        name = "Ymir";
 
         cooldown1 = 60;
         cooldown2 = 120;
@@ -132,5 +137,24 @@ public class Ymir extends Ability implements Listener
         onShield();
 
         event.getDamager().setFreezeTicks(420);
+    }
+
+    @EventHandler
+    public void checkSecondUnlock(EntityDeathEvent event)
+    {
+        if(plugin.secondUnlocked(player))
+            return;
+
+        LivingEntity entity = event.getEntity();
+
+        if(entity.getType() == EntityType.BLAZE)
+        {
+            if(entity.getKiller() == player)
+            {
+                Biome biome = player.getWorld().getBiome(player.getLocation());
+                if(biome == Biome.ICE_SPIKES || biome == Biome.SNOWY_BEACH || biome == Biome.SNOWY_PLAINS || biome == Biome.SNOWY_SLOPES || biome == Biome.SNOWY_TAIGA)
+                    plugin.unlockSecondAbility(player);
+            }
+        }
     }
 }

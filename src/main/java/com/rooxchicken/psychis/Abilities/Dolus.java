@@ -3,6 +3,7 @@ package com.rooxchicken.psychis.Abilities;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -30,6 +31,7 @@ public class Dolus extends Ability
     private Player player;
 
     private double ticks = 0;
+    private int yCheck = 0;
 
     public Dolus(Psychis _plugin, Player _player)
     {
@@ -38,6 +40,7 @@ public class Dolus extends Ability
         player = _player;
 
         type = 5;
+        name = "Dolus";
 
         cooldown1 = 45;
         cooldown2 = 120;
@@ -68,5 +71,21 @@ public class Dolus extends Ability
             return;
         
         Psychis.tasks.add(new Dolus_Crush(plugin, player, this));
+    }
+
+    @Override
+    public void secondAbilityUnlock()
+    {
+        if(plugin.secondUnlocked(player))
+            return;
+        
+        if(player.getLocation().getY() <= -67)
+        {
+            Bukkit.getLogger().info("" + yCheck);
+            if(++yCheck > 120)
+                plugin.unlockSecondAbility(player);
+        }
+        else
+            yCheck = 0;
     }
 }

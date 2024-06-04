@@ -6,6 +6,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import com.rooxchicken.psychis.Psychis;
+import com.rooxchicken.psychis.Abilities.Ability;
 
 public class CooldownTask extends Task
 {
@@ -23,7 +24,8 @@ public class CooldownTask extends Task
     {
         for(Player player : plugin.hasMod)
         {
-            if(plugin.getPlayerAbility(player) != null)
+            Ability ability = plugin.getPlayerAbility(player);
+            if(ability != null)
             {
                 PersistentDataContainer data = player.getPersistentDataContainer();
 
@@ -42,6 +44,8 @@ public class CooldownTask extends Task
 
                 Psychis.sendPlayerData(player, "1_0_" + (cooldown1/2) + "_" + plugin.getPlayerAbility(player).cooldown1);
                 Psychis.sendPlayerData(player, "1_1_" + (cooldown2/2) + "_" + plugin.getPlayerAbility(player).cooldown2);
+
+                ability.secondAbilityUnlock();
             }
         }
     }

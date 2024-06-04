@@ -1,12 +1,17 @@
 package com.rooxchicken.psychis.Abilities;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Color;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World.Environment;
+import org.bukkit.advancement.Advancement;
+import org.bukkit.advancement.AdvancementDisplay;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -15,6 +20,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.player.PlayerAdvancementDoneEvent;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
@@ -31,6 +39,9 @@ import com.rooxchicken.psychis.Tasks.Agni_Cinder;
 import com.rooxchicken.psychis.Tasks.Agni_HeatSeek;
 import com.rooxchicken.psychis.Tasks.Boreas_Vortex;
 
+import net.minecraft.advancements.Advancements;
+import net.minecraft.resources.MinecraftKey;
+
 public class Boreas extends Ability implements Listener
 {
     private Psychis plugin;
@@ -43,6 +54,10 @@ public class Boreas extends Ability implements Listener
     private Boreas_Vortex vortex;
     private boolean launched = false;
 
+    private NamespacedKey sniperDuelKey;
+    private NamespacedKey cavesAndCliffsKey;
+    private NamespacedKey starTraderKey;
+
     public Boreas(Psychis _plugin, Player _player)
     {
         super(_plugin, _player);
@@ -50,9 +65,25 @@ public class Boreas extends Ability implements Listener
         player = _player;
 
         type = 3;
+        name = "Boreas";
 
         cooldown1 = 30;
         cooldown2 = 60;
+
+        sniperDuelKey = new NamespacedKey(_plugin, "boreas_advSniperDuel");
+        cavesAndCliffsKey = new NamespacedKey(_plugin, "boreas_advCavesAndCliffs");
+        starTraderKey = new NamespacedKey(_plugin, "boreas_advStarTrader");
+
+        PersistentDataContainer data = player.getPersistentDataContainer();
+
+        if(!data.has(cavesAndCliffsKey, PersistentDataType.BOOLEAN))
+            data.set(cavesAndCliffsKey, PersistentDataType.BOOLEAN, false);
+
+        if(!data.has(sniperDuelKey, PersistentDataType.BOOLEAN))
+            data.set(sniperDuelKey, PersistentDataType.BOOLEAN, false);
+
+        if(!data.has(starTraderKey, PersistentDataType.BOOLEAN))
+            data.set(starTraderKey, PersistentDataType.BOOLEAN, false);
     }
 
     @Override
@@ -123,5 +154,54 @@ public class Boreas extends Ability implements Listener
             jumpEffect = false;
             event.setCancelled(true);
         }
+    }
+
+    @EventHandler
+    public void checkSecondUnlock(PlayerAdvancementDoneEvent event)
+    {
+        if(event.getPlayer() != player)
+            return;
+
+        PersistentDataContainer data = player.getPersistentDataContainer();
+
+        NamespacedKey key = event.getAdvancement().getKey();
+        if(key.getNamespace().equals(NamespacedKey.MINECRAFT))
+        {
+            if(key.getKey().equals("adventure/fall_from_world_height"))
+                data.set(cavesAndCliffsKey, PersistentDataType.BOOLEAN, true);
+            else if(key.getKey().equals("adventure/sniper_duel"))
+                data.set(sniperDuelKey, PersistentDataType.BOOLEAN, true);
+            else if(key.getKey().equals("adventure/trade_at_world_height"))
+                data.set(starTraderKey, PersistentDataType.BOOLEAN, true);
+        }
+
+        if(data.get(cavesAndCliffsKey, PersistentDataType.BOOLEAN) && data.get(sniperDuelKey, PersistentDataType.BOOLEAN) && data.get(starTraderKey, PersistentDataType.BOOLEAN))
+        {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "advancement revoke " + player.getName() + " only minecraft:adventure/fall_from_world_height");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "advancement revoke " + player.getName() + " only minecraft:adventure/sniper_duel");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "advancement revoke " + player.getName() + " only minecraft:adventure/trade_at_world_height");
+
+            data.set(cavesAndCliffsKey, PersistentDataType.BOOLEAN, false);
+            data.set(sniperDuelKey, PersistentDataType.BOOLEAN, false);
+            data.set(starTraderKey, PersistentDataType.BOOLEAN, false);
+            
+            if(!plugin.secondUnlocked(player))
+                plugin.unlockSecondAbility(player);
+        }
+    }
+
+    public Advancement getAdvancement(String name)
+    {
+        Iterator<Advancement> it = Bukkit.getServer().advancementIterator();
+        // gets all 'registered' advancements on the server.
+        while (it.hasNext()) {
+            // loops through these.
+            Advancement a = it.next();
+            if (a.getKey().toString().equalsIgnoreCase(name)) {
+                //checks if one of these has the same name as the one you asked for. If so, this is the one it will return.
+                return a;
+            }
+        }
+        return null;
     }
 }

@@ -7,6 +7,7 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -45,6 +46,7 @@ public class Enil extends Ability implements Listener
         player = _player;
 
         type = 2;
+        name = "Enil";
         
         cooldown1 = 45;
         cooldown2 = 120;
@@ -77,6 +79,15 @@ public class Enil extends Ability implements Listener
                 {
                     ((Player)entity).addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 80, 2));
                     ((Player)entity).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 80, 2));
+                }
+
+                if(!plugin.secondUnlocked(player))
+                {
+                    if(entity instanceof Creeper)
+                    {
+                        if(player.getWorld().isThundering())
+                            plugin.unlockSecondAbility(player);
+                    }
                 }
             }
             else

@@ -3,10 +3,18 @@ package com.rooxchicken.psychis.Abilities;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.World.Environment;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityPortalEnterEvent;
+import org.bukkit.event.entity.EntityPortalEvent;
+import org.bukkit.event.entity.EntityPortalExitEvent;
+import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -35,6 +43,7 @@ public class Agni extends Ability
         player = _player;
 
         type = 1;
+        name = "Agni";
 
         cooldown1 = 30;
         cooldown2 = 90;
@@ -94,6 +103,27 @@ public class Agni extends Ability
                 player.getWorld().playSound(player.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 1);
                 ticks = -1;
                 break;
+        }
+    }
+
+    @EventHandler
+    public void checkGhast(EntityPortalEnterEvent event)
+    {
+        if(plugin.secondUnlocked(player))
+            return;
+
+        if(event.getEntity() == player)
+        {
+            if(player.getWorld().getEnvironment() == Environment.NORMAL)
+                for(Object o : Psychis.getNearbyEntities(player.getLocation(), 40))
+                {
+                    if(((Entity)o).getType() == EntityType.GHAST)
+                    {
+                        plugin.unlockSecondAbility(player);
+                        ((LivingEntity)o).damage(100);
+                        return;
+                    }
+                }
         }
     }
 }

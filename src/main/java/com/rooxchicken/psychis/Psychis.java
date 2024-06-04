@@ -13,6 +13,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
@@ -193,8 +194,12 @@ public class Psychis extends JavaPlugin implements Listener
         if(!data.has(secondUnlockedKey, PersistentDataType.BOOLEAN))
             data.set(secondUnlockedKey, PersistentDataType.BOOLEAN, false);
         
-        playerAbilities.put(player, nameToAbility(player, data.get(abilityKey, PersistentDataType.INTEGER)));
+        Ability ability = nameToAbility(player, data.get(abilityKey, PersistentDataType.INTEGER));
+        Bukkit.getPluginManager().registerEvents(ability, this);
+        playerAbilities.put(player, ability);
         sendPlayerData(player, "0_" + data.get(abilityKey, PersistentDataType.INTEGER) + "_" + data.get(secondUnlockedKey, PersistentDataType.BOOLEAN));
+
+        player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1);
     }
 
     //format: name_index_ability1 name_ability1 desc (tooltip)_ability2 name_ability2 desc (tooltip)_unlock-requirements
@@ -431,6 +436,28 @@ public class Psychis extends JavaPlugin implements Listener
             return data.get(secondUnlockedKey, PersistentDataType.BOOLEAN);
         
         return false;
+    }
+
+    public void unlockSecondAbility(Player player)
+    {
+        PersistentDataContainer data = player.getPersistentDataContainer();
+        data.set(secondUnlockedKey, PersistentDataType.BOOLEAN, true);
+        sendPlayerData(player, "0_" + data.get(abilityKey, PersistentDataType.INTEGER) + "_" + data.get(secondUnlockedKey, PersistentDataType.BOOLEAN));
+
+        for(Player p : Bukkit.getOnlinePlayers())
+        {
+            p.playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1, 1);
+            p.sendMessage("§4" + player.getName() + " §chas unlocked the second ability for §4" + getPlayerAbility(player).name + "§c!");
+        }
+
+    }
+
+    @EventHandler
+    public void resetSecondAbility(PlayerDeathEvent event)
+    {
+        PersistentDataContainer data = event.getEntity().getPersistentDataContainer();
+        data.set(secondUnlockedKey, PersistentDataType.BOOLEAN, false);
+        sendPlayerData(event.getEntity(), "0_" + data.get(abilityKey, PersistentDataType.INTEGER) + "_" + data.get(secondUnlockedKey, PersistentDataType.BOOLEAN));
     }
 
     public void setCooldownForce(Player player, int cooldown, NamespacedKey key)

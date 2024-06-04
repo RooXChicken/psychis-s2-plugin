@@ -9,6 +9,7 @@ import com.rooxchicken.psychis.Psychis;
 public abstract class Ability implements Listener
 {
     private Psychis plugin;
+    public String name = "null";
     private Player player;
     public int type = -1;
 
@@ -22,4 +23,6 @@ public abstract class Ability implements Listener
     public void passive() {}
     public void activateFirstAbility(int state) {}
     public void activateSecondAbility(int state) {}
+
+    public void secondAbilityUnlock() {}
 }
