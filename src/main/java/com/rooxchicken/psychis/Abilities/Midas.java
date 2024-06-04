@@ -3,6 +3,7 @@ package com.rooxchicken.psychis.Abilities;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
@@ -12,6 +13,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
@@ -27,6 +30,7 @@ import com.rooxchicken.psychis.Psychis;
 import com.rooxchicken.psychis.Tasks.Agni_Cinder;
 import com.rooxchicken.psychis.Tasks.Agni_HeatSeek;
 import com.rooxchicken.psychis.Tasks.Midas_Greed;
+import com.rooxchicken.psychis.Tasks.Midas_Jackpot;
 
 public class Midas extends Ability
 {
@@ -41,6 +45,10 @@ public class Midas extends Ability
         plugin = _plugin;
         player = _player;
         type = 6;
+
+        cooldown1 = 90;
+        cooldown2 = 180;
+
         name = "Midas";
     }
 
@@ -53,7 +61,13 @@ public class Midas extends Ability
     @Override
     public void activateFirstAbility(int state)
     {
-        
+        if(state == 0)
+        {
+            if(!plugin.setCooldown(player, cooldown1, Psychis.ability1CooldownKey))
+                return;
+
+            Psychis.tasks.add(new Midas_Jackpot(plugin, player, this));
+        }
     }
     
     @Override
@@ -61,11 +75,24 @@ public class Midas extends Ability
     {
         if(state == 0)
         {
-            if(!plugin.setCooldown(player, cooldown1, Psychis.ability1CooldownKey))
+            if(!plugin.setCooldown(player, cooldown2, Psychis.ability2CooldownKey))
                 return;
 
-            Psychis.tasks.add(new Midas_Greed(plugin, player));
+            Midas_Greed greed = new Midas_Greed(plugin, player);
+            Bukkit.getPluginManager().registerEvents(greed, plugin);
+            Psychis.tasks.add(greed);
         }
+    }
+
+    @Override
+    public void secondAbilityUnlock()
+    {
+        if(plugin.secondUnlocked(player))
+            return;
+
+        PersistentDataContainer data = player.getPersistentDataContainer();
+        data.set(Psychis.secondUnlockedKey, PersistentDataType.BOOLEAN, true);
+        Psychis.sendPlayerData(player, "0_" + data.get(Psychis.abilityKey, PersistentDataType.INTEGER) + "_" + data.get(Psychis.secondUnlockedKey, PersistentDataType.BOOLEAN));
     }
 
     @EventHandler

@@ -34,6 +34,7 @@ public class Midas_Greed extends Task implements Listener
         tickThreshold = 1;
 
         cantEat = new ArrayList<Player>();
+        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 1, 1);
     }
 
     @Override
@@ -45,7 +46,10 @@ public class Midas_Greed extends Task implements Listener
             {
                 Player p = (Player)o;
                 if(!cantEat.contains(p))
+                {
                     cantEat.add(p);
+                    p.getWorld().spawnParticle(Particle.REDSTONE, p.getLocation().clone().add(0, 1, 0), 40, 0.5, 0.5, 0.5, new Particle.DustOptions(Color.YELLOW, 1f));
+                }
             }
         }
 
@@ -57,6 +61,7 @@ public class Midas_Greed extends Task implements Listener
     public void onCancel()
     {
         cantEat.clear();
+        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1, 1.6f);
     }
 
     @EventHandler
@@ -67,6 +72,10 @@ public class Midas_Greed extends Task implements Listener
             return;
 
         ItemStack item = event.getItem();
-        event.setCancelled(item.getType() == Material.GOLDEN_APPLE);
+        if(item != null && item.getType() == Material.GOLDEN_APPLE)
+        {
+            event.setCancelled(true);
+            p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PLAYER_BURP, 1, 0.9f);
+        }
     }
 }

@@ -30,6 +30,8 @@ import com.comphenix.protocol.wrappers.WrappedDataWatcher.Registry;
 import com.rooxchicken.psychis.Psychis;
 import com.rooxchicken.psychis.Tasks.Agni_Cinder;
 import com.rooxchicken.psychis.Tasks.Agni_HeatSeek;
+import com.rooxchicken.psychis.Tasks.Varuna_Typhoon;
+import com.rooxchicken.psychis.Tasks.Varuna_WaterJet;
 
 public class Varuna extends Ability implements Listener
 {
@@ -45,6 +47,10 @@ public class Varuna extends Ability implements Listener
         plugin = _plugin;
         player = _player;
         type = 0;
+
+        cooldown1 = 90;
+        cooldown2 = 60;
+
         name = "Varuna";
     }
 
@@ -57,7 +63,13 @@ public class Varuna extends Ability implements Listener
     @Override
     public void activateFirstAbility(int state)
     {
-        
+        if(state == 0)
+        {
+            if(!plugin.setCooldown(player, cooldown1, Psychis.ability1CooldownKey))
+                return;
+
+            Psychis.tasks.add(new Varuna_Typhoon(plugin, player));
+        }
     }
     
     @Override
@@ -65,6 +77,14 @@ public class Varuna extends Ability implements Listener
     {
         if(!plugin.secondUnlocked(player))
             return;
+
+        if(!plugin.setCooldown(player, cooldown2, Psychis.ability2CooldownKey))
+            return;
+
+        if(state == 0)
+        {
+            Psychis.tasks.add(new Varuna_WaterJet(plugin, player, this));
+        }
     }
 
     @Override

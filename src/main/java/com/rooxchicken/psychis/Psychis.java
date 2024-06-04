@@ -53,6 +53,7 @@ import com.rooxchicken.psychis.Abilities.Agni;
 import com.rooxchicken.psychis.Abilities.Boreas;
 import com.rooxchicken.psychis.Abilities.Dolus;
 import com.rooxchicken.psychis.Abilities.Enil;
+import com.rooxchicken.psychis.Abilities.Midas;
 import com.rooxchicken.psychis.Abilities.Varuna;
 import com.rooxchicken.psychis.Abilities.Ymir;
 import com.rooxchicken.psychis.Commands.FirstAbility;
@@ -258,6 +259,9 @@ public class Psychis extends JavaPlugin implements Listener
         {
             switch(getPlayerAbility(damagedPlayers.get(event.getEntity())).type)
             {
+                case 0:
+                    event.setDeathMessage(event.getEntity().getName() + " got waterboarded by " + damagedPlayers.get(event.getEntity()).getName());
+                    break;
                 case 1:
                     event.setDeathMessage(event.getEntity().getName() + " got torched by " + damagedPlayers.get(event.getEntity()).getName());
                     break;
@@ -269,6 +273,9 @@ public class Psychis extends JavaPlugin implements Listener
                     break;
                 case 5:
                     event.setDeathMessage(event.getEntity().getName() + " got crushed by " + damagedPlayers.get(event.getEntity()).getName());
+                    break;
+                case 6:
+                    event.setDeathMessage(event.getEntity().getName() + " couldn't handle the greed");
                     break;
             }
         }
@@ -375,6 +382,8 @@ public class Psychis extends JavaPlugin implements Listener
                 return new Ymir(this, player);
             case 5:
                 return new Dolus(this, player);
+            case 6:
+                return new Midas(this, player);
 
             default:
                 return null;
@@ -460,7 +469,7 @@ public class Psychis extends JavaPlugin implements Listener
         sendPlayerData(event.getEntity(), "0_" + data.get(abilityKey, PersistentDataType.INTEGER) + "_" + data.get(secondUnlockedKey, PersistentDataType.BOOLEAN));
 
         Player killer = event.getEntity().getKiller();
-        if(killer != null)
+        if(killer != null && data.get(abilityKey, PersistentDataType.INTEGER) != 6)
         {
             PersistentDataContainer data2 = killer.getPersistentDataContainer();
             if(data2.get(secondUnlockedKey, PersistentDataType.BOOLEAN))
