@@ -458,6 +458,23 @@ public class Psychis extends JavaPlugin implements Listener
         PersistentDataContainer data = event.getEntity().getPersistentDataContainer();
         data.set(secondUnlockedKey, PersistentDataType.BOOLEAN, false);
         sendPlayerData(event.getEntity(), "0_" + data.get(abilityKey, PersistentDataType.INTEGER) + "_" + data.get(secondUnlockedKey, PersistentDataType.BOOLEAN));
+
+        Player killer = event.getEntity().getKiller();
+        if(killer != null)
+        {
+            PersistentDataContainer data2 = killer.getPersistentDataContainer();
+            if(data2.get(secondUnlockedKey, PersistentDataType.BOOLEAN))
+                return;
+                
+            data2.set(secondUnlockedKey, PersistentDataType.BOOLEAN, true);
+            sendPlayerData(killer, "0_" + data2.get(abilityKey, PersistentDataType.INTEGER) + "_" + data2.get(secondUnlockedKey, PersistentDataType.BOOLEAN));
+
+            for(Player p : Bukkit.getOnlinePlayers())
+            {
+                p.playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1, 1);
+                p.sendMessage("§4" + killer.getName() + " §chas stolen the second ability from §4" + event.getEntity().getName() + "§c!");
+            }
+        }
     }
 
     public void setCooldownForce(Player player, int cooldown, NamespacedKey key)
