@@ -75,7 +75,7 @@ public class Varuna_WaterJet extends Task
                     move.setY(0.2);
                     entity.setVelocity(move);
                     if(entity instanceof LivingEntity)
-                        ((LivingEntity)entity).damage(15);
+                        ((LivingEntity)entity).damage(10);
 
                         player.getWorld().playSound(start, Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1, 1.2f);
                 }

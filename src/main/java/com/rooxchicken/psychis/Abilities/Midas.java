@@ -94,19 +94,4 @@ public class Midas extends Ability
         data.set(Psychis.secondUnlockedKey, PersistentDataType.BOOLEAN, true);
         Psychis.sendPlayerData(player, "0_" + data.get(Psychis.abilityKey, PersistentDataType.INTEGER) + "_" + data.get(Psychis.secondUnlockedKey, PersistentDataType.BOOLEAN));
     }
-
-    @EventHandler
-    public void addExtraAbsorption(PlayerItemConsumeEvent event)
-    {
-        Player _player = event.getPlayer();
-        if(_player != player)
-            return;
-
-        ItemStack item = event.getItem();
-
-        if(item.getType() == Material.GOLDEN_APPLE)
-        {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 2400, 1));
-        }
-    }
 }

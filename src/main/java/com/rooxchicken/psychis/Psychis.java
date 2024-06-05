@@ -34,6 +34,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerCommandSendEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -43,6 +44,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
@@ -472,7 +475,7 @@ public class Psychis extends JavaPlugin implements Listener
         if(killer != null && data.get(abilityKey, PersistentDataType.INTEGER) != 6)
         {
             PersistentDataContainer data2 = killer.getPersistentDataContainer();
-            if(data2.get(secondUnlockedKey, PersistentDataType.BOOLEAN))
+            if(data2.get(secondUnlockedKey, PersistentDataType.BOOLEAN) || !data2.get(secondUnlockedKey, PersistentDataType.BOOLEAN))
                 return;
                 
             data2.set(secondUnlockedKey, PersistentDataType.BOOLEAN, true);
@@ -483,6 +486,28 @@ public class Psychis extends JavaPlugin implements Listener
                 p.playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1, 1);
                 p.sendMessage("§4" + killer.getName() + " §chas stolen the second ability from §4" + event.getEntity().getName() + "§c!");
             }
+        }
+    }
+
+    @EventHandler
+    public void addExtraAbsorption(PlayerItemConsumeEvent event)
+    {
+        Player player = event.getPlayer();
+        Ability ability = getPlayerAbility(player);
+
+        ItemStack item = event.getItem();
+
+        if(item.getType() == Material.GOLDEN_APPLE)
+        {
+            if(player.hasPotionEffect(PotionEffectType.ABSORPTION) && player.getPotionEffect(PotionEffectType.ABSORPTION).getAmplifier() == 1)
+            {
+                player.removePotionEffect(PotionEffectType.ABSORPTION);
+            }
+
+            if(ability.type != 6)
+                return;
+
+            player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 2400, 1));
         }
     }
 
