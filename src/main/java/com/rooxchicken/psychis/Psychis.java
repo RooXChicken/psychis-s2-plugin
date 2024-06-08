@@ -22,6 +22,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -60,6 +61,8 @@ import com.rooxchicken.psychis.Abilities.Midas;
 import com.rooxchicken.psychis.Abilities.Varuna;
 import com.rooxchicken.psychis.Abilities.Ymir;
 import com.rooxchicken.psychis.Commands.FirstAbility;
+import com.rooxchicken.psychis.Commands.GiveItems;
+import com.rooxchicken.psychis.Commands.OpenMenu;
 import com.rooxchicken.psychis.Commands.ParticleTest;
 import com.rooxchicken.psychis.Commands.PickAbility;
 import com.rooxchicken.psychis.Commands.ResetCooldown;
@@ -126,12 +129,17 @@ public class Psychis extends JavaPlugin implements Listener
         this.getCommand("hdn_pickability").setExecutor(new PickAbility(this));
         this.getCommand("selectability").setExecutor(new SelectAbility(this));
 
+        this.getCommand("hdn_openmenu").setExecutor(new OpenMenu(this));
+
+        blockedCommands.add("hdn_openmenu");
         blockedCommands.add("hdn_verifymod");
         blockedCommands.add("hdn_pickability");
 
         this.getCommand("ptest").setExecutor(new ParticleTest(this));
         this.getCommand("resetcooldown").setExecutor(new ResetCooldown(this));
         this.getCommand("setability").setExecutor(new SetAbility(this));
+
+        this.getCommand("giveitems").setExecutor(new GiveItems(this));
 
         for(Player player : getServer().getOnlinePlayers())
         {
@@ -281,6 +289,26 @@ public class Psychis extends JavaPlugin implements Listener
                     event.setDeathMessage(event.getEntity().getName() + " couldn't handle the greed");
                     break;
             }
+        }
+    }
+
+    @EventHandler
+    public void choiceCompass(PlayerInteractEvent event)
+    {
+        if(event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK)
+            return;
+            
+        Player player = event.getPlayer();
+        ItemStack item = event.getItem();
+
+        if(item.hasItemMeta() && item.getItemMeta().getDisplayName().equals("§f§l§oChoice Compass"))
+        {
+            item.setAmount(item.getAmount() - 1);
+            PersistentDataContainer data = player.getPersistentDataContainer();
+            data.set(Psychis.abilityKey, PersistentDataType.INTEGER, -1);
+            data.set(Psychis.secondUnlockedKey, PersistentDataType.BOOLEAN, false);
+            Psychis.sendPlayerData(player, "0_" + data.get(Psychis.abilityKey, PersistentDataType.INTEGER) + "_" + data.get(Psychis.secondUnlockedKey, PersistentDataType.BOOLEAN));
+            Psychis.sendPlayerData(player, "3");
         }
     }
 

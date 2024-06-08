@@ -52,4 +52,12 @@ commands:
       description: Sets the selected ability
       usage: /setability <ability> <secondunlocked>
 
+   hdn_openmenu:
+      description: For re-selection item. OP only
+      usage: /hdn_openmemu <player>
+
+   giveitems:
+      description: Gives items
+      usage: /giveitems
+
 depend: [ ProtocolLib ]
