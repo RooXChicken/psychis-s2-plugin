@@ -503,7 +503,7 @@ public class Psychis extends JavaPlugin implements Listener
         if(killer != null && data.get(abilityKey, PersistentDataType.INTEGER) != 6)
         {
             PersistentDataContainer data2 = killer.getPersistentDataContainer();
-            if(data2.get(secondUnlockedKey, PersistentDataType.BOOLEAN) || !data2.get(secondUnlockedKey, PersistentDataType.BOOLEAN))
+            if(data2.get(secondUnlockedKey, PersistentDataType.BOOLEAN) || !data.get(secondUnlockedKey, PersistentDataType.BOOLEAN))
                 return;
                 
             data2.set(secondUnlockedKey, PersistentDataType.BOOLEAN, true);

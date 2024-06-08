@@ -73,7 +73,7 @@ public class Agni_Cinder extends Task
                 if(entity instanceof LivingEntity)
                 {
                     agni.deadly = true;
-                    ((LivingEntity)entity).damage(dmg*4.0, player);
+                    ((LivingEntity)entity).damage(dmg*5.0, player);
                 }
 
                 explode(particlePos);
@@ -171,7 +171,7 @@ public class Agni_Cinder extends Task
         player.getWorld().spawnParticle(Particle.FLAME, pos, (int)(60*dmg), 0.5, 0.5, 0.5, 0.2);
         player.getWorld().createExplosion(pos.getX(), pos.getY(), pos.getZ(), (float)Psychis.ClampD(dmg*1.2, 0, 2));
 
-        for(Object o : Psychis.getNearbyEntities(pos, (int)dmg*3))
+        for(Object o : Psychis.getNearbyEntities(pos, (int)dmg*4))
         {
             if(o instanceof Entity && !o.equals(player))
             {
