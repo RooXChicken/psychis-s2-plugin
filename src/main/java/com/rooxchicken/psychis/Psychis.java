@@ -496,8 +496,6 @@ public class Psychis extends JavaPlugin implements Listener
     public void resetSecondAbility(PlayerDeathEvent event)
     {
         PersistentDataContainer data = event.getEntity().getPersistentDataContainer();
-        data.set(secondUnlockedKey, PersistentDataType.BOOLEAN, false);
-        sendPlayerData(event.getEntity(), "0_" + data.get(abilityKey, PersistentDataType.INTEGER) + "_" + data.get(secondUnlockedKey, PersistentDataType.BOOLEAN));
 
         Player killer = event.getEntity().getKiller();
         if(killer != null && data.get(abilityKey, PersistentDataType.INTEGER) != 6)
@@ -515,6 +513,9 @@ public class Psychis extends JavaPlugin implements Listener
                 p.sendMessage("§4" + killer.getName() + " §chas stolen the second ability from §4" + event.getEntity().getName() + "§c!");
             }
         }
+
+        data.set(secondUnlockedKey, PersistentDataType.BOOLEAN, false);
+        sendPlayerData(event.getEntity(), "0_" + data.get(abilityKey, PersistentDataType.INTEGER) + "_" + data.get(secondUnlockedKey, PersistentDataType.BOOLEAN));
     }
 
     @EventHandler
