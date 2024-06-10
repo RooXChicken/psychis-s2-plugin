@@ -40,6 +40,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -498,14 +499,29 @@ public class Psychis extends JavaPlugin implements Listener
         PersistentDataContainer data = event.getEntity().getPersistentDataContainer();
 
         Player killer = event.getEntity().getKiller();
-        if(killer != null && data.get(abilityKey, PersistentDataType.INTEGER) != 6)
+        if(killer != null)
         {
             PersistentDataContainer data2 = killer.getPersistentDataContainer();
             if(data2.get(secondUnlockedKey, PersistentDataType.BOOLEAN) || !data.get(secondUnlockedKey, PersistentDataType.BOOLEAN))
                 return;
                 
             data2.set(secondUnlockedKey, PersistentDataType.BOOLEAN, true);
-            sendPlayerData(killer, "0_" + data2.get(abilityKey, PersistentDataType.INTEGER) + "_" + data2.get(secondUnlockedKey, PersistentDataType.BOOLEAN));
+
+            if(data.get(abilityKey, PersistentDataType.INTEGER) == 6)
+            {
+                data2.set(abilityKey, PersistentDataType.INTEGER, 6);
+                sendPlayerData(killer, "0_" + data2.get(abilityKey, PersistentDataType.INTEGER) + "_" + data2.get(secondUnlockedKey, PersistentDataType.BOOLEAN));
+
+                data.set(abilityKey, PersistentDataType.INTEGER, -1);
+                sendPlayerData(event.getEntity(), "0_" + data.get(abilityKey, PersistentDataType.INTEGER) + "_" + data.get(secondUnlockedKey, PersistentDataType.BOOLEAN));
+
+                for(Player p : Bukkit.getOnlinePlayers())
+                {
+                    p.playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1, 1);
+                    p.sendMessage("§4" + killer.getName() + " §chas stolen the Midas variant from §4" + event.getEntity().getName() + "§c!");
+                }
+                return;
+            }
 
             for(Player p : Bukkit.getOnlinePlayers())
             {
@@ -516,6 +532,18 @@ public class Psychis extends JavaPlugin implements Listener
 
         data.set(secondUnlockedKey, PersistentDataType.BOOLEAN, false);
         sendPlayerData(event.getEntity(), "0_" + data.get(abilityKey, PersistentDataType.INTEGER) + "_" + data.get(secondUnlockedKey, PersistentDataType.BOOLEAN));
+    }
+
+    @EventHandler
+    public void showSelectionMenuOnDeath(PlayerRespawnEvent event)
+    {
+        Player player = event.getPlayer();
+        PersistentDataContainer data = player.getPersistentDataContainer();
+
+        if(data.get(abilityKey, PersistentDataType.INTEGER) == -1)
+        {
+            sendPlayerData(player, "3");
+        }
     }
 
     @EventHandler

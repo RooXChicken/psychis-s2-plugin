@@ -25,7 +25,7 @@ public class PickAbility implements CommandExecutor
         Player player = Bukkit.getPlayer(sender.getName());
 
         PersistentDataContainer data = player.getPersistentDataContainer();
-        if(data.has(Psychis.abilityKey, PersistentDataType.INTEGER))
+        if(data.has(Psychis.abilityKey, PersistentDataType.INTEGER) && data.get(Psychis.abilityKey, PersistentDataType.INTEGER) != -1)
         {
             if(!sender.isOp())
                 return true;

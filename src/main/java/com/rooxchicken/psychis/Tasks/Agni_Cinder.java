@@ -1,6 +1,7 @@
 package com.rooxchicken.psychis.Tasks;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -25,6 +26,7 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.WrappedDataValue;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher.Registry;
+import com.rooxchicken.Data.OffsetPair;
 import com.rooxchicken.psychis.Psychis;
 import com.rooxchicken.psychis.Abilities.Agni;
 
@@ -36,6 +38,8 @@ public class Agni_Cinder extends Task
     private int t;
     private double dmg = 1;
     private static double offset = 0.1;
+    private static HashMap<Double, OffsetPair> radOffsetPair;
+    private static HashMap<Double, OffsetPair> pitchOffsetPair;
 
     public Agni_Cinder(Psychis _plugin, Player _player, Agni _agni, double _dmg)
     {
@@ -46,6 +50,8 @@ public class Agni_Cinder extends Task
         tickThreshold = 1;
 
         dmg = _dmg;
+        radOffsetPair = new HashMap<Double, OffsetPair>();
+        pitchOffsetPair = new HashMap<Double, OffsetPair>();
     }
 
     @Override
@@ -93,17 +99,30 @@ public class Agni_Cinder extends Task
         Location pos = _pos.clone();
         double max = Math.ceil(dmg) + (1-(dmg - (int)dmg));
 
-        double rad = Math.toRadians(pos.getYaw()+90);
-        double xOffset = Math.cos(rad);
-        double zOffset = Math.sin(rad);
+
+        double _rad = pos.getYaw()+90;
+        if(!radOffsetPair.containsKey(_rad))
+        {
+            double rad = Math.toRadians(_rad);
+            radOffsetPair.put(_rad, new OffsetPair(Math.cos(rad), Math.sin(rad)));
+        }
+
+        double xOffset = radOffsetPair.get(_rad).xOffset;
+        double zOffset = radOffsetPair.get(_rad).zOffset;
 
         for(int k = 0; k < 7; k++)
         {
             player.getWorld().spawnParticle(Particle.REDSTONE, pos.clone().add(pos.getDirection().multiply(k*0.2)), 1, offset, offset, offset, new Particle.DustOptions(color, 1f));
         }
 
-        double yPosOffset = Math.cos(Math.toRadians(pos.getPitch()));
-        double yDirOffset = Math.sin(Math.toRadians(pos.getPitch()));
+        double pitch = pos.getPitch();
+        if(!pitchOffsetPair.containsKey(pitch))
+        {
+            pitchOffsetPair.put(pitch, new OffsetPair(Math.cos(Math.toRadians(pos.getPitch())), Math.cos(Math.toRadians(pos.getPitch()))));
+        }
+
+        double yPosOffset = pitchOffsetPair.get(pitch).xOffset;
+        double yDirOffset = pitchOffsetPair.get(pitch).zOffset;
 
         for(int k = (int)max+1; k > 0; k--)
         {

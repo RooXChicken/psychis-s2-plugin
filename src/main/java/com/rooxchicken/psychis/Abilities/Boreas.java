@@ -89,7 +89,7 @@ public class Boreas extends Ability implements Listener
     @Override
     public void passive()
     {
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 21, 1, true));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 21, 0, true));
         if(jumpEffect)
         {
             player.getWorld().spawnParticle(Particle.REDSTONE, player.getLocation(), 5, 0.05, 0.05, 0.05, new Particle.DustOptions(Color.WHITE, 1f));

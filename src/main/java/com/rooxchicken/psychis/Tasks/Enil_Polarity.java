@@ -82,6 +82,7 @@ public class Enil_Polarity extends Task
                     LivingEntity entity = (LivingEntity)e;
                     enil.deadly = true;
                     entity.damage(14, player);
+                    entity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 8, 0));
                     entity.getWorld().strikeLightning(entity.getLocation());
                     shocked.add(entity);
                 }
