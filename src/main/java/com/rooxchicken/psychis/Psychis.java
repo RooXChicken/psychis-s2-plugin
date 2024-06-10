@@ -502,10 +502,6 @@ public class Psychis extends JavaPlugin implements Listener
         if(killer != null)
         {
             PersistentDataContainer data2 = killer.getPersistentDataContainer();
-            if(data2.get(secondUnlockedKey, PersistentDataType.BOOLEAN) || !data.get(secondUnlockedKey, PersistentDataType.BOOLEAN))
-                return;
-                
-            data2.set(secondUnlockedKey, PersistentDataType.BOOLEAN, true);
 
             if(data.get(abilityKey, PersistentDataType.INTEGER) == 6)
             {
@@ -522,6 +518,11 @@ public class Psychis extends JavaPlugin implements Listener
                 }
                 return;
             }
+
+            if(data2.get(secondUnlockedKey, PersistentDataType.BOOLEAN) || !data.get(secondUnlockedKey, PersistentDataType.BOOLEAN))
+                return;
+
+            data2.set(secondUnlockedKey, PersistentDataType.BOOLEAN, true);
 
             for(Player p : Bukkit.getOnlinePlayers())
             {
