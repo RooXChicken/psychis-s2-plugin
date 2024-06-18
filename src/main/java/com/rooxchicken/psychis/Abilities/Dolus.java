@@ -33,6 +33,8 @@ public class Dolus extends Ability
     private double ticks = 0;
     private int yCheck = 0;
 
+    public boolean canRetract = true;
+
     public Dolus(Psychis _plugin, Player _player)
     {
         super(_plugin, _player);
@@ -42,7 +44,7 @@ public class Dolus extends Ability
         type = 5;
         name = "Dolus";
 
-        cooldown1 = 45;
+        cooldown1 = 90;
         cooldown2 = 120;
     }
 
@@ -55,9 +57,10 @@ public class Dolus extends Ability
     @Override
     public void activateFirstAbility(int state)
     {
-        if(!plugin.setCooldown(player, cooldown1, Psychis.ability1CooldownKey))
+        if(!canRetract || !plugin.checkCooldown(player, Psychis.ability1CooldownKey))
             return;
         
+            canRetract = false;
         Psychis.tasks.add(new Dolus_Retract(plugin, player, this));
     }
     

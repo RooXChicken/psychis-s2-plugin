@@ -34,8 +34,6 @@ public class Dolus_Retract extends Task
         dolus = _dolus;
         tickThreshold = 1;
 
-
-
         //dolus.deadly = true;
     }
 
@@ -64,6 +62,8 @@ public class Dolus_Retract extends Task
     @Override
     public void onCancel()
     {
+        plugin.setCooldown(player, dolus.cooldown1, Psychis.ability1CooldownKey);
+        dolus.canRetract = true;
         dolus.deadly = false;
     }
 }

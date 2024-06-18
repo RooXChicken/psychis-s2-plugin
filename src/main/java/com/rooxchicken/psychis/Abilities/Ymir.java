@@ -133,10 +133,10 @@ public class Ymir extends Ability implements Listener
         if(event.getEntity() != player || shield.count == 0)
             return;
 
-        event.setCancelled(true);
         onShield();
-
         event.getDamager().setFreezeTicks(420);
+        
+        event.setCancelled(true);
     }
 
     @EventHandler

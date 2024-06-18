@@ -46,7 +46,7 @@ public class Agni extends Ability
         name = "Agni";
 
         cooldown1 = 30;
-        cooldown2 = 90;
+        cooldown2 = 60;
     }
 
     @Override

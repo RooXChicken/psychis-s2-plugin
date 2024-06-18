@@ -73,7 +73,7 @@ public class Enil extends Ability implements Listener
             if(entity != null)
             {
                 if(entity instanceof LivingEntity)
-                    ((LivingEntity)entity).damage(12, player);
+                    ((LivingEntity)entity).damage(8);
                 entity.getWorld().strikeLightningEffect(entity.getLocation());
                 if(entity instanceof Player)
                 {
