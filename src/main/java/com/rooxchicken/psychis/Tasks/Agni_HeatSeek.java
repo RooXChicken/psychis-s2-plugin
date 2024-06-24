@@ -7,6 +7,7 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -67,7 +68,7 @@ public class Agni_HeatSeek extends Task
 
         for(Object o : Psychis.getNearbyEntities(start, t/10))
         {
-            if(o instanceof LivingEntity && !o.equals(player))
+            if(o instanceof LivingEntity && !o.equals(player) && !(o instanceof Villager))
             {
                 LivingEntity entity = (LivingEntity)o;
                 entity.setFireTicks(40);

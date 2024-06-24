@@ -20,6 +20,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -71,6 +72,7 @@ import com.rooxchicken.psychis.Commands.SecondAbility;
 import com.rooxchicken.psychis.Commands.SelectAbility;
 import com.rooxchicken.psychis.Commands.SetAbility;
 import com.rooxchicken.psychis.Commands.VerifyMod;
+import com.rooxchicken.psychis.Tasks.Agni_Cinder;
 import com.rooxchicken.psychis.Tasks.CooldownTask;
 import com.rooxchicken.psychis.Tasks.Task;
 
@@ -419,6 +421,22 @@ public class Psychis extends JavaPlugin implements Listener
 
             default:
                 return null;
+        }
+    }
+
+    @EventHandler
+    private void cancelAgniVillager(EntityDamageEvent event)
+    {
+        if(event.getEntity() instanceof Villager && (event.getCause() == DamageCause.BLOCK_EXPLOSION || event.getCause() == DamageCause.ENTITY_EXPLOSION))
+        {
+            boolean cinder = false;
+            for(Task task : tasks)
+            {
+                if(task instanceof Agni_Cinder)
+                    cinder = true;
+            }
+
+            event.setCancelled(cinder);
         }
     }
 
