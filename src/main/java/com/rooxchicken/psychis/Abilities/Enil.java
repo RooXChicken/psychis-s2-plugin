@@ -11,6 +11,7 @@ import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -72,10 +73,10 @@ public class Enil extends Ability implements Listener
             deadly = true;
             if(entity != null)
             {
-                if(entity instanceof LivingEntity)
+                if(entity instanceof LivingEntity && !(entity instanceof Villager))
                     ((LivingEntity)entity).damage(8);
                 entity.getWorld().strikeLightningEffect(entity.getLocation());
-                if(entity instanceof Player)
+                if(entity instanceof Player && !(entity instanceof Villager))
                 {
                     ((Player)entity).addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 80, 2));
                     ((Player)entity).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 80, 2));

@@ -7,6 +7,7 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
@@ -66,7 +67,7 @@ public class Varuna_Typhoon extends Task
         {
             for(Object o : Psychis.getNearbyEntities(start, (int)Math.ceil(size)))
             {
-                if(o instanceof LivingEntity && !o.equals(player))
+                if(o instanceof LivingEntity && !o.equals(player) && !(o instanceof Villager))
                 {
                     LivingEntity entity = (LivingEntity)o;
                     entity.setVelocity(new Vector(0, 1.5, 0));

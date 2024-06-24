@@ -14,6 +14,7 @@ import org.bukkit.block.Container;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.event.Listener;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -55,7 +56,7 @@ public class Midas_Jackpot extends Task
 
         for(Object e : Psychis.getNearbyEntities(start, size))
         {
-            if(e instanceof LivingEntity)
+            if(e instanceof LivingEntity && !(e instanceof Villager))
             {
                 LivingEntity entity = (LivingEntity)e;
                 if(entity.getLocation().clone().subtract(0, 0.1, 0).getBlock().getType() == Material.GOLD_BLOCK)

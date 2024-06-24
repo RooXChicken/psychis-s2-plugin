@@ -10,6 +10,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
@@ -75,7 +76,7 @@ public class Enil_Polarity extends Task
     {
         for(Object e : Psychis.getNearbyEntities(start, (int)Math.ceil(size)))
         {
-            if(e instanceof LivingEntity && player != e)
+            if(e instanceof LivingEntity && player != e && !(e instanceof Villager))
             {
                 if(!shocked.contains(e))
                 {

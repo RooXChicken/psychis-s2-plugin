@@ -14,6 +14,7 @@ import org.bukkit.block.Container;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.event.Listener;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -54,7 +55,7 @@ public class Ymir_Biome extends Task
 
         for(Object e : Psychis.getNearbyEntities(start, size))
         {
-            if(e instanceof LivingEntity && e != player)
+            if(e instanceof LivingEntity && e != player && !(e instanceof Villager))
             {
                 LivingEntity entity = (LivingEntity)e;
                 entity.setFreezeTicks(200);

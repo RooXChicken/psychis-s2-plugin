@@ -13,6 +13,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
@@ -74,7 +75,7 @@ public class Varuna_WaterJet extends Task
                     Vector move = start.clone().subtract(mid).toVector().multiply(distance*-2);
                     move.setY(0.2);
                     entity.setVelocity(move);
-                    if(entity instanceof LivingEntity)
+                    if(entity instanceof LivingEntity && !(entity instanceof Villager))
                         ((LivingEntity)entity).damage(10);
 
                         player.getWorld().playSound(start, Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1, 1.2f);

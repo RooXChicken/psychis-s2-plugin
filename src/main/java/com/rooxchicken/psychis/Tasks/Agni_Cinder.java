@@ -16,6 +16,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.entity.minecart.ExplosiveMinecart;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -76,7 +77,7 @@ public class Agni_Cinder extends Task
                 Entity entity = (Entity)o;
                 entity.setFireTicks(200);
 
-                if(entity instanceof LivingEntity)
+                if(entity instanceof LivingEntity && !(entity instanceof Villager))
                 {
                     agni.deadly = true;
                     ((LivingEntity)entity).damage(dmg*5.0, player);
