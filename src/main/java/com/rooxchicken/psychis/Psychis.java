@@ -73,8 +73,10 @@ import com.rooxchicken.psychis.Commands.SelectAbility;
 import com.rooxchicken.psychis.Commands.SetAbility;
 import com.rooxchicken.psychis.Commands.VerifyMod;
 import com.rooxchicken.psychis.Tasks.Agni_Cinder;
+import com.rooxchicken.psychis.Tasks.CheckForItems;
 import com.rooxchicken.psychis.Tasks.CooldownTask;
 import com.rooxchicken.psychis.Tasks.Task;
+import com.rooxchicken.psychis.Weapons.Stormbringer;
 
 public class Psychis extends JavaPlugin implements Listener
 {
@@ -90,6 +92,8 @@ public class Psychis extends JavaPlugin implements Listener
     public static ArrayList<Task> tasks;
     public ArrayList<Player> hasMod;
 
+    public Stormbringer stormbringer;
+
     private List<String> blockedCommands = new ArrayList<>();
 
     @Override
@@ -98,6 +102,7 @@ public class Psychis extends JavaPlugin implements Listener
         tasks = new ArrayList<Task>();
         hasMod = new ArrayList<Player>();
         tasks.add(new CooldownTask(this));
+        tasks.add(new CheckForItems(this));
 
         abilityKey = new NamespacedKey(this, "abilityKey");
         secondUnlockedKey = new NamespacedKey(this, "secondUnlocked");
@@ -144,6 +149,8 @@ public class Psychis extends JavaPlugin implements Listener
 
         this.getCommand("giveitems").setExecutor(new GiveItems(this));
 
+        stormbringer = new Stormbringer(this);
+
         for(Player player : getServer().getOnlinePlayers())
         {
             addPlayerAbility(player);
@@ -161,6 +168,8 @@ public class Psychis extends JavaPlugin implements Listener
 
                 for(Ability a : playerAbilities.values())
                     a.passive();
+
+                stormbringer.passive();
 
                 for(Task t : _tasks)
                 {
