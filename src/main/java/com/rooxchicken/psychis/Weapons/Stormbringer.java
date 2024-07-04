@@ -78,7 +78,7 @@ public class Stormbringer extends Weapon
             damager.setVelocity(new Vector(damager.getVelocity().getX(), damager.getFallDistance()/6.0, damager.getVelocity().getZ()));
 
             jumpEffect(damager);
-            entity.getWorld().playSound(entity.getLocation(), Sound.BLOCK_ANVIL_LAND, 1, 1);
+            entity.getWorld().playSound(entity.getLocation(), Sound.BLOCK_ANVIL_LAND, 0.7f, 0.8f);
         }
     }
 

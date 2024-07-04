@@ -76,6 +76,7 @@ import com.rooxchicken.psychis.Tasks.Agni_Cinder;
 import com.rooxchicken.psychis.Tasks.CheckForItems;
 import com.rooxchicken.psychis.Tasks.CooldownTask;
 import com.rooxchicken.psychis.Tasks.Task;
+import com.rooxchicken.psychis.Weapons.AgniAxe;
 import com.rooxchicken.psychis.Weapons.Stormbringer;
 
 public class Psychis extends JavaPlugin implements Listener
@@ -93,6 +94,7 @@ public class Psychis extends JavaPlugin implements Listener
     public ArrayList<Player> hasMod;
 
     public Stormbringer stormbringer;
+    public AgniAxe agniAxe;
 
     private List<String> blockedCommands = new ArrayList<>();
 
@@ -150,6 +152,7 @@ public class Psychis extends JavaPlugin implements Listener
         this.getCommand("giveitems").setExecutor(new GiveItems(this));
 
         stormbringer = new Stormbringer(this);
+        agniAxe = new AgniAxe(this);
 
         for(Player player : getServer().getOnlinePlayers())
         {
@@ -170,6 +173,7 @@ public class Psychis extends JavaPlugin implements Listener
                     a.passive();
 
                 stormbringer.passive();
+                agniAxe.passive();
 
                 for(Task t : _tasks)
                 {

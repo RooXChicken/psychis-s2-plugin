@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.rooxchicken.psychis.Psychis;
+import com.rooxchicken.psychis.Weapons.AgniAxe;
 import com.rooxchicken.psychis.Weapons.Stormbringer;
 
 public class CheckForItems extends Task
@@ -31,6 +32,8 @@ public class CheckForItems extends Task
                 {
                     if(item.getItemMeta().getDisplayName().equals(plugin.stormbringer.itemName))
                         Stormbringer.addPlayer(player);
+                    if(item.getItemMeta().getDisplayName().equals(plugin.agniAxe.itemName))
+                        AgniAxe.addPlayer(player);
                 }
             }
         }
