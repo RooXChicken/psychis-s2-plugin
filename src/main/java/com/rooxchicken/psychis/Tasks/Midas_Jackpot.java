@@ -69,7 +69,7 @@ public class Midas_Jackpot extends Task
                     else if(entity == player)
                     {
                         if(t % 48 == 0)
-                            entity.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 0));
+                            entity.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 0));
                     }
                 }
             }

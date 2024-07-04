@@ -1,14 +1,13 @@
 package com.rooxchicken.psychis.Commands;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
-
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import com.rooxchicken.psychis.Psychis;
 public class GiveItems implements CommandExecutor
 {
@@ -24,8 +23,15 @@ public class GiveItems implements CommandExecutor
     {
         if(!sender.isOp())
             return true;
+
+        Player player = Bukkit.getPlayer(sender.getName());
         
-        Bukkit.dispatchCommand(sender, "give " + sender.getName() + " compass{display:{Name:'{\"text\":\"Choice Compass\",\"color\":\"white\",\"bold\":true,\"italic\":true}',Lore:['{\"text\":\"Allows you to reroll your variant\"}']},Enchantments:[{}]} 1");
+        ItemStack agniAxe = new ItemStack(Material.NETHERITE_AXE);
+        ItemMeta agniMeta = agniAxe.getItemMeta();
+        agniMeta.setDisplayName("§xF§F§8§0§2§2§lAgni Axe");
+        agniAxe.setItemMeta(agniMeta);
+
+        player.getInventory().addItem(agniAxe);
 
         return true;
     }

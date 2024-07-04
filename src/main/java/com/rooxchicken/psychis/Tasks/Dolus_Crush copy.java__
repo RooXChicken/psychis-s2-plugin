@@ -77,7 +77,7 @@ public class Dolus_Crush extends Task
             xOffset = cacheX[i] * size;
             zOffset = cacheZ[i] * size;
 
-            player.getWorld().spawnParticle(Particle.REDSTONE, particlePos.add(xOffset, 0, zOffset), 1, 0, 0, 0, new Particle.DustOptions(Color.PURPLE, 1f));
+            player.getWorld().spawnParticle(Particle.DUST, particlePos.add(xOffset, 0, zOffset), 1, 0, 0, 0, new Particle.DustOptions(Color.PURPLE, 1f));
         }
 
         for(Object o : Psychis.getNearbyEntities(start, (int)Math.ceil(size)))

@@ -108,7 +108,7 @@ public class Boreas_Vortex extends Task
                 xOffset = cacheX[k];
                 zOffset = cacheZ[k];
 
-                player.getWorld().spawnParticle(Particle.REDSTONE, particlePos.add(xOffset * sphereOffsetXZ * size, sphereOffset * size, zOffset * sphereOffsetXZ * size), 1, offset, offset, offset, new Particle.DustOptions(colors[(int)(Math.random()*3)], 2f));
+                player.getWorld().spawnParticle(Particle.DUST, particlePos.add(xOffset * sphereOffsetXZ * size, sphereOffset * size, zOffset * sphereOffsetXZ * size), 1, offset, offset, offset, new Particle.DustOptions(colors[(int)(Math.random()*3)], 2f));
             }
         }
 

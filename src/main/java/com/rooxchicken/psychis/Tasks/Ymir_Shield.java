@@ -58,7 +58,7 @@ public class Ymir_Shield extends Task
     private void makeShield(double _xOffset, double _zOffset, double _yaw)
     {
         Location loc = player.getLocation().clone().add(_xOffset*size, 0.8, _zOffset*size);
-        player.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, new Particle.DustOptions(Color.AQUA, 1f));
+        player.getWorld().spawnParticle(Particle.DUST, loc, 1, 0, 0, 0, new Particle.DustOptions(Color.AQUA, 1f));
 
         double rad = Math.toRadians(_yaw+90);
         double xOffset = Math.cos(rad);
@@ -67,17 +67,17 @@ public class Ymir_Shield extends Task
         for(int i = 1; i <= 3; i++)
         {
             loc.add(xOffset*-0.2, 0.2, zOffset*-0.2);
-            player.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, new Particle.DustOptions(Color.AQUA, 1f));
+            player.getWorld().spawnParticle(Particle.DUST, loc, 1, 0, 0, 0, new Particle.DustOptions(Color.AQUA, 1f));
             loc.add(xOffset*0.2, 0, zOffset*0.2);
-            player.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, new Particle.DustOptions(Color.AQUA, 1f));
+            player.getWorld().spawnParticle(Particle.DUST, loc, 1, 0, 0, 0, new Particle.DustOptions(Color.AQUA, 1f));
             loc.add(xOffset*0.2, 0, zOffset*0.2);
-            player.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, new Particle.DustOptions(Color.AQUA, 1f));
+            player.getWorld().spawnParticle(Particle.DUST, loc, 1, 0, 0, 0, new Particle.DustOptions(Color.AQUA, 1f));
             loc.add(xOffset*-0.2, 0, zOffset*-0.2);
         }
 
 
-        // player.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, new Particle.DustOptions(Color.AQUA, 1f));
-        // player.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, new Particle.DustOptions(Color.AQUA, 1f));
-        // player.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, new Particle.DustOptions(Color.AQUA, 1f));
+        // player.getWorld().spawnParticle(Particle.DUST, loc, 1, 0, 0, 0, new Particle.DustOptions(Color.AQUA, 1f));
+        // player.getWorld().spawnParticle(Particle.DUST, loc, 1, 0, 0, 0, new Particle.DustOptions(Color.AQUA, 1f));
+        // player.getWorld().spawnParticle(Particle.DUST, loc, 1, 0, 0, 0, new Particle.DustOptions(Color.AQUA, 1f));
     }
 }

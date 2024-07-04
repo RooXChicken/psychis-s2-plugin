@@ -48,7 +48,7 @@ public class Dolus_RetractParticle extends Task
     {
         double off = 0.0;
         start.add(start.clone().subtract(moveTo).multiply(0.2).add(Math.random()*off, Math.random()*off, Math.random()*off).multiply(-1));
-        player.getWorld().spawnParticle(Particle.REDSTONE, start, 3, 0, 0, 0, new Particle.DustOptions(Color.PURPLE, 1f));
+        player.getWorld().spawnParticle(Particle.DUST, start, 3, 0, 0, 0, new Particle.DustOptions(Color.PURPLE, 1f));
 
         t++;
 

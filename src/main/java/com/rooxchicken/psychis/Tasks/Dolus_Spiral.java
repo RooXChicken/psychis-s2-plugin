@@ -48,7 +48,7 @@ public class Dolus_Spiral extends Task
     {
         start.subtract(0, speed, 0);
 
-        player.getWorld().spawnParticle(Particle.REDSTONE, start, 1, 0, 0, 0, new Particle.DustOptions(Color.PURPLE, 1f));
+        player.getWorld().spawnParticle(Particle.DUST, start, 1, 0, 0, 0, new Particle.DustOptions(Color.PURPLE, 1f));
 
         if(start.getBlock() != null && !start.getBlock().isPassable())
             cancel = true;

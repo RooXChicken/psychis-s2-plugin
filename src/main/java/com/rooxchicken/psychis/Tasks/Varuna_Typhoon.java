@@ -59,8 +59,8 @@ public class Varuna_Typhoon extends Task
             double xOffset = cacheX[i] * size;
             double zOffset = cacheZ[i] * size;
 
-            player.getWorld().spawnParticle(Particle.REDSTONE, particlePos.clone().add(xOffset, Math.sin(Math.toRadians(i*80+(t*8)))/2.0, zOffset), 2, 0, 0, 0, new Particle.DustOptions((Math.random() > 0.7) ? Color.TEAL : Color.BLUE, 1f));
-            player.getWorld().spawnParticle(Particle.REDSTONE, particlePos.clone().add(xOffset, Math.sin(Math.toRadians(i*80-80+(t*8)))/2.0, zOffset), 2, 0, 0, 0, new Particle.DustOptions((Math.random() > 0.7) ? Color.TEAL : Color.BLUE, 1f));
+            player.getWorld().spawnParticle(Particle.DUST, particlePos.clone().add(xOffset, Math.sin(Math.toRadians(i*80+(t*8)))/2.0, zOffset), 2, 0, 0, 0, new Particle.DustOptions((Math.random() > 0.7) ? Color.TEAL : Color.BLUE, 1f));
+            player.getWorld().spawnParticle(Particle.DUST, particlePos.clone().add(xOffset, Math.sin(Math.toRadians(i*80-80+(t*8)))/2.0, zOffset), 2, 0, 0, 0, new Particle.DustOptions((Math.random() > 0.7) ? Color.TEAL : Color.BLUE, 1f));
         }
 
         if(t > 30)
@@ -77,7 +77,7 @@ public class Varuna_Typhoon extends Task
                     for(int i = 0; i < 20; i++)
                     {
                         for(int k = 0; k < 60; k++)
-                            player.getWorld().spawnParticle(Particle.REDSTONE, entity.getLocation().clone().add(cacheX[k*3]/(i*0.5), i/3.6, cacheZ[k*3]/(i*0.5)), 2, 0, 0, 0, new Particle.DustOptions((Math.random() > 0.7) ? Color.TEAL : Color.BLUE, 1f));
+                            player.getWorld().spawnParticle(Particle.DUST, entity.getLocation().clone().add(cacheX[k*3]/(i*0.5), i/3.6, cacheZ[k*3]/(i*0.5)), 2, 0, 0, 0, new Particle.DustOptions((Math.random() > 0.7) ? Color.TEAL : Color.BLUE, 1f));
                     }
                 }
             }

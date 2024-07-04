@@ -48,7 +48,7 @@ public class Boreas_VortexEffect extends Task
     {
         double off = 0.0;
         start.add(start.clone().subtract(moveTo).multiply(0.2).add(Math.random()*off, Math.random()*off, Math.random()*off).multiply(-1));
-        player.getWorld().spawnParticle(Particle.REDSTONE, start, 1, 0, 0, 0, new Particle.DustOptions(Color.WHITE, 1f));
+        player.getWorld().spawnParticle(Particle.DUST, start, 1, 0, 0, 0, new Particle.DustOptions(Color.WHITE, 1f));
 
         t++;
 

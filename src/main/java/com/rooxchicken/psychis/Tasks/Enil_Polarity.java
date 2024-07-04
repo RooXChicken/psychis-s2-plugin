@@ -83,7 +83,7 @@ public class Enil_Polarity extends Task
                     LivingEntity entity = (LivingEntity)e;
                     enil.deadly = true;
                     entity.damage(14, player);
-                    entity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 160, 0));
+                    entity.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 160, 0));
                     entity.getWorld().strikeLightning(entity.getLocation());
                     shocked.add(entity);
                 }
@@ -120,7 +120,7 @@ public class Enil_Polarity extends Task
                 xOffset = cacheX[k];
                 zOffset = cacheZ[k];
 
-                player.getWorld().spawnParticle(Particle.REDSTONE, particlePos.add(xOffset * sphereOffsetXZ * size, sphereOffset * size, zOffset * sphereOffsetXZ * size), 1, offset, offset, offset, new Particle.DustOptions(colors[(int)(Math.random()*3)], 1f));
+                player.getWorld().spawnParticle(Particle.DUST, particlePos.add(xOffset * sphereOffsetXZ * size, sphereOffset * size, zOffset * sphereOffsetXZ * size), 1, offset, offset, offset, new Particle.DustOptions(colors[(int)(Math.random()*3)], 1f));
             }
         }
 
@@ -132,7 +132,7 @@ public class Enil_Polarity extends Task
     @Override
     public void onCancel()
     {
-        player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 200, shocked.size() * 2));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, 200, shocked.size() * 2));
         enil.deadly = false;
     }
 }

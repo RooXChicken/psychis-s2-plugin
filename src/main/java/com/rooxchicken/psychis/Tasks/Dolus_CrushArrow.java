@@ -71,7 +71,7 @@ public class Dolus_CrushArrow extends Task
 
         for(int k = 0; k < 7; k++)
         {
-            player.getWorld().spawnParticle(Particle.REDSTONE, pos.clone().add(pos.getDirection().multiply(k*0.2)), 1, offset, offset, offset, new Particle.DustOptions(Color.PURPLE, 1f));
+            player.getWorld().spawnParticle(Particle.DUST, pos.clone().add(pos.getDirection().multiply(k*0.2)), 1, offset, offset, offset, new Particle.DustOptions(Color.PURPLE, 1f));
         }
 
         double yPosOffset = Math.cos(Math.toRadians(pos.getPitch()));
@@ -84,8 +84,8 @@ public class Dolus_CrushArrow extends Task
             pos.add(pos.getDirection().multiply(0.2));
 
             double off = (s*k/4)/k * ((k-1)/s);
-            player.getWorld().spawnParticle(Particle.REDSTONE, pos.clone().add(pos.getDirection().add(new Vector(off * xOffset * yDirOffset, off * yPosOffset, off * zOffset * yDirOffset))), 1, offset, offset, offset, new Particle.DustOptions(Color.PURPLE, 1f));
-            player.getWorld().spawnParticle(Particle.REDSTONE, pos.clone().add(pos.getDirection().subtract(new Vector(off * xOffset * yDirOffset, off * yPosOffset, off * zOffset * yDirOffset))), 1, offset, offset, offset, new Particle.DustOptions(Color.PURPLE, 1f));
+            player.getWorld().spawnParticle(Particle.DUST, pos.clone().add(pos.getDirection().add(new Vector(off * xOffset * yDirOffset, off * yPosOffset, off * zOffset * yDirOffset))), 1, offset, offset, offset, new Particle.DustOptions(Color.PURPLE, 1f));
+            player.getWorld().spawnParticle(Particle.DUST, pos.clone().add(pos.getDirection().subtract(new Vector(off * xOffset * yDirOffset, off * yPosOffset, off * zOffset * yDirOffset))), 1, offset, offset, offset, new Particle.DustOptions(Color.PURPLE, 1f));
         }
         
         return pos;
