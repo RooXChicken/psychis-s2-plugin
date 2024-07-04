@@ -1,16 +1,21 @@
 package com.rooxchicken.psychis.Weapons;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import com.rooxchicken.psychis.Psychis;
@@ -31,6 +36,7 @@ public class Stormbringer extends Weapon
         type = 4;
 
         jumps = new ArrayList<Player>();
+        
         players = new ArrayList<Player>();
     }
 
@@ -54,6 +60,29 @@ public class Stormbringer extends Weapon
     }
 
     @EventHandler
+    public void handleMacePhysics(EntityDamageByEntityEvent event)
+    {
+        if(!(event.getEntity() instanceof LivingEntity && event.getDamager() instanceof Player))
+            return;
+
+        LivingEntity entity = (LivingEntity)event.getEntity();
+        Player damager = (Player)event.getDamager();
+
+        if(!players.contains(damager) || damager.getFallDistance() < 2)
+            return;
+
+        ItemStack stormBringer = damager.getInventory().getItemInMainHand();
+        if(stormBringer != null && stormBringer.hasItemMeta() && stormBringer.getItemMeta().getDisplayName().equals(itemName))
+        {
+            event.setDamage(event.getDamage() + damager.getFallDistance()*2);
+            damager.setVelocity(new Vector(damager.getVelocity().getX(), damager.getFallDistance()/6.0, damager.getVelocity().getZ()));
+
+            jumpEffect(damager);
+            entity.getWorld().playSound(entity.getLocation(), Sound.BLOCK_ANVIL_LAND, 1, 1);
+        }
+    }
+
+    @EventHandler
     public void activateDoubleJump(PlayerToggleFlightEvent event)
     {
         if(event.getPlayer().getGameMode() == GameMode.CREATIVE || !players.contains(event.getPlayer()))
@@ -67,9 +96,14 @@ public class Stormbringer extends Weapon
         Vector direction = player.getLocation().getDirection().clone();
         player.setVelocity(player.getVelocity().add(direction));
 
-        player.getWorld().spawnParticle(Particle.REDSTONE, player.getLocation(), 100, 0.5f, 0.2f, 0.5f, new Particle.DustOptions(Color.WHITE, 1f));
-        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BIG_DRIPLEAF_FALL, 1, 1);
+        jumpEffect(player);
 
         jumps.add(player);
+    }
+
+    private void jumpEffect(LivingEntity entity)
+    {
+        entity.getWorld().spawnParticle(Particle.REDSTONE, entity.getLocation(), 100, 0.5f, 0.2f, 0.5f, new Particle.DustOptions(Color.WHITE, 1f));
+        entity.getWorld().playSound(entity.getLocation(), Sound.BLOCK_BIG_DRIPLEAF_FALL, 1, 1);
     }
 }
