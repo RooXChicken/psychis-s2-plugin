@@ -51,7 +51,7 @@ public class Dolus_Retract extends Task
                 if(e instanceof Player)
                     ((Player)e).addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 10, 1));
                 entity.setVelocity(entity.getLocation().clone().subtract(player.getLocation()).toVector().multiply(-0.1));
-                player.getWorld().spawnParticle(Particle.DUST, ((Entity)e).getLocation(), 3, 0, 0, 0, new Particle.DustOptions(Color.PURPLE, 1f));
+                player.getWorld().spawnParticle(Particle.REDSTONE, ((Entity)e).getLocation(), 3, 0, 0, 0, new Particle.DustOptions(Color.PURPLE, 1f));
             }
         }
 

@@ -56,7 +56,7 @@ public class Enil extends Ability implements Listener
     @Override
     public void passive()
     {
-        player.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, 21, 1));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 21, 1));
 
         if(charging)
             player.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, player.getEyeLocation().subtract(0, 1, 0), 1, 0, 1, 0);
@@ -78,8 +78,8 @@ public class Enil extends Ability implements Listener
                 entity.getWorld().strikeLightningEffect(entity.getLocation());
                 if(entity instanceof Player && !(entity instanceof Villager))
                 {
-                    ((Player)entity).addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 80, 2));
-                    ((Player)entity).addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 80, 2));
+                    ((Player)entity).addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 80, 2));
+                    ((Player)entity).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 80, 2));
                 }
 
                 if(!plugin.secondUnlocked(player))

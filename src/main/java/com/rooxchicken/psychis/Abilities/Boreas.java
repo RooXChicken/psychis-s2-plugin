@@ -71,7 +71,7 @@ public class Boreas extends Ability implements Listener
         player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 21, 0, true));
         if(jumpEffect)
         {
-            player.getWorld().spawnParticle(Particle.DUST, player.getLocation(), 5, 0.05, 0.05, 0.05, new Particle.DustOptions(Color.WHITE, 1f));
+            player.getWorld().spawnParticle(Particle.REDSTONE, player.getLocation(), 5, 0.05, 0.05, 0.05, new Particle.DustOptions(Color.WHITE, 1f));
             if(player.getVelocity().getY() < 0)
                 jumpEffect = false;
         }
@@ -85,7 +85,7 @@ public class Boreas extends Ability implements Listener
             if(!plugin.setCooldown(player, cooldown1, Psychis.ability1CooldownKey))
                 return;
             player.setVelocity(player.getLocation().getDirection().multiply(-2.1));
-            player.getWorld().spawnParticle(Particle.DUST, player.getLocation(), 100, 0.5f, 0.2f, 0.5f, new Particle.DustOptions(Color.WHITE, 1f));
+            player.getWorld().spawnParticle(Particle.REDSTONE, player.getLocation(), 100, 0.5f, 0.2f, 0.5f, new Particle.DustOptions(Color.WHITE, 1f));
             player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BIG_DRIPLEAF_FALL, 1, 1);
             jump = true;
             jumpEffect = true;

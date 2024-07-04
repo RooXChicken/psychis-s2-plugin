@@ -113,7 +113,7 @@ public class Agni_Cinder extends Task
 
         for(int k = 0; k < 7; k++)
         {
-            player.getWorld().spawnParticle(Particle.DUST, pos.clone().add(pos.getDirection().multiply(k*0.2)), 1, offset, offset, offset, new Particle.DustOptions(color, 1f));
+            player.getWorld().spawnParticle(Particle.REDSTONE, pos.clone().add(pos.getDirection().multiply(k*0.2)), 1, offset, offset, offset, new Particle.DustOptions(color, 1f));
         }
 
         double pitch = pos.getPitch();
@@ -130,8 +130,8 @@ public class Agni_Cinder extends Task
             pos.add(pos.getDirection().multiply(0.2));
 
             double off = (max*k/4)/k * ((k-1)/max);
-            player.getWorld().spawnParticle(Particle.DUST, pos.clone().add(pos.getDirection().add(new Vector(off * xOffset * yDirOffset, off * yPosOffset, off * zOffset * yDirOffset))), 1, offset, offset, offset, new Particle.DustOptions(color, 1f));
-            player.getWorld().spawnParticle(Particle.DUST, pos.clone().add(pos.getDirection().subtract(new Vector(off * xOffset * yDirOffset, off * yPosOffset, off * zOffset * yDirOffset))), 1, offset, offset, offset, new Particle.DustOptions(color, 1f));
+            player.getWorld().spawnParticle(Particle.REDSTONE, pos.clone().add(pos.getDirection().add(new Vector(off * xOffset * yDirOffset, off * yPosOffset, off * zOffset * yDirOffset))), 1, offset, offset, offset, new Particle.DustOptions(color, 1f));
+            player.getWorld().spawnParticle(Particle.REDSTONE, pos.clone().add(pos.getDirection().subtract(new Vector(off * xOffset * yDirOffset, off * yPosOffset, off * zOffset * yDirOffset))), 1, offset, offset, offset, new Particle.DustOptions(color, 1f));
         }
         
         player.getWorld().playSound(pos, Sound.BLOCK_SMOKER_SMOKE, 1, 1);

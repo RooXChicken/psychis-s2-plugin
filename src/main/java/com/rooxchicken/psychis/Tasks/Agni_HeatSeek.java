@@ -63,7 +63,7 @@ public class Agni_HeatSeek extends Task
             xOffset = cacheX[i] * t/10;
             zOffset = cacheZ[i] * t/10;
 
-            player.getWorld().spawnParticle(Particle.DUST, particlePos.add(xOffset, 0, zOffset), 1, 0, 0, 0, new Particle.DustOptions(Color.ORANGE, 1f));
+            player.getWorld().spawnParticle(Particle.REDSTONE, particlePos.add(xOffset, 0, zOffset), 1, 0, 0, 0, new Particle.DustOptions(Color.ORANGE, 1f));
         }
 
         for(Object o : Psychis.getNearbyEntities(start, t/10))

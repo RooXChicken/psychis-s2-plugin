@@ -99,8 +99,8 @@ public class Dolus_Crush extends Task
         //     xOffset2 = cacheX[k + kOffset] * size;
         //     zOffset2 = cacheZ[k + kOffset] * size;
 
-        //     player.getWorld().spawnParticle(Particle.DUST, particlePos.clone().add(xOffset, i/16.0, zOffset), 1, 0, 0, 0, new Particle.DustOptions(Color.PURPLE, 1f));
-        //     player.getWorld().spawnParticle(Particle.DUST, particlePos.clone().add(xOffset2, i/16.0, zOffset2), 1, 0, 0, 0, new Particle.DustOptions(Color.PURPLE, 1f));
+        //     player.getWorld().spawnParticle(Particle.REDSTONE, particlePos.clone().add(xOffset, i/16.0, zOffset), 1, 0, 0, 0, new Particle.DustOptions(Color.PURPLE, 1f));
+        //     player.getWorld().spawnParticle(Particle.REDSTONE, particlePos.clone().add(xOffset2, i/16.0, zOffset2), 1, 0, 0, 0, new Particle.DustOptions(Color.PURPLE, 1f));
         // }
 
         //double blockY = Psychis.getBlock(player, 40, 90).getLocation().getY() + 1.1
@@ -140,8 +140,8 @@ public class Dolus_Crush extends Task
             Psychis.tasks.add(new Dolus_Spiral(plugin, player, particlePos.clone().add(xOffset, 18 + o/8.0, zOffset), 1));
             Psychis.tasks.add(new Dolus_Spiral(plugin, player, particlePos.clone().add(xOffset2, 18 + o/8.0, zOffset2), 1));
 
-            //player.getWorld().spawnParticle(Particle.DUST, particlePos.clone().add(xOffset, i/16.0, zOffset), 1, 0, 0, 0, new Particle.DustOptions(Color.PURPLE, 1f));
-            //player.getWorld().spawnParticle(Particle.DUST, particlePos.clone().add(xOffset2, i/16.0, zOffset2), 1, 0, 0, 0, new Particle.DustOptions(Color.PURPLE, 1f));
+            //player.getWorld().spawnParticle(Particle.REDSTONE, particlePos.clone().add(xOffset, i/16.0, zOffset), 1, 0, 0, 0, new Particle.DustOptions(Color.PURPLE, 1f));
+            //player.getWorld().spawnParticle(Particle.REDSTONE, particlePos.clone().add(xOffset2, i/16.0, zOffset2), 1, 0, 0, 0, new Particle.DustOptions(Color.PURPLE, 1f));
         }
 
         for(Object o : Psychis.getNearbyEntities(start, (int)Math.ceil(size)))
@@ -150,7 +150,7 @@ public class Dolus_Crush extends Task
             {
                 ((Entity)o).setVelocity(((Entity)o).getVelocity().multiply(0.4));
                 if(o instanceof Player)
-                    ((Player)o).addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 10, 2));
+                    ((Player)o).addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 10, 2));
             }
         }
 

@@ -48,7 +48,7 @@ public class Midas_Greed extends Task implements Listener
                 if(!cantEat.contains(p))
                 {
                     cantEat.add(p);
-                    p.getWorld().spawnParticle(Particle.DUST, p.getLocation().clone().add(0, 1, 0), 40, 0.5, 0.5, 0.5, new Particle.DustOptions(Color.YELLOW, 1f));
+                    p.getWorld().spawnParticle(Particle.REDSTONE, p.getLocation().clone().add(0, 1, 0), 40, 0.5, 0.5, 0.5, new Particle.DustOptions(Color.YELLOW, 1f));
                 }
             }
         }

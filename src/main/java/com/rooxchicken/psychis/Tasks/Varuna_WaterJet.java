@@ -83,11 +83,11 @@ public class Varuna_WaterJet extends Task
             }
         }
 
-        player.getWorld().spawnParticle(Particle.SPLASH, start.clone().add(0, Math.sin(Math.toRadians(t*80)), 0), 60, 0, 0, 0);
-        player.getWorld().spawnParticle(Particle.SPLASH, start.clone().add(0, Math.sin(Math.toRadians(t*80-80)), 0), 60, 0, 0, 0);
+        player.getWorld().spawnParticle(Particle.WATER_SPLASH, start.clone().add(0, Math.sin(Math.toRadians(t*80)), 0), 60, 0, 0, 0);
+        player.getWorld().spawnParticle(Particle.WATER_SPLASH, start.clone().add(0, Math.sin(Math.toRadians(t*80-80)), 0), 60, 0, 0, 0);
 
-        player.getWorld().spawnParticle(Particle.DUST, start.clone().add(0, Math.sin(Math.toRadians(t*80)), 0), 2, 0, 0, 0, new Particle.DustOptions(Color.BLUE, 1.5f));
-        player.getWorld().spawnParticle(Particle.DUST, start.clone().add(0, Math.sin(Math.toRadians(t*80-80)), 0), 2, 0, 0, 0, new Particle.DustOptions(Color.BLUE, 1.5f));
+        player.getWorld().spawnParticle(Particle.REDSTONE, start.clone().add(0, Math.sin(Math.toRadians(t*80)), 0), 2, 0, 0, 0, new Particle.DustOptions(Color.BLUE, 1.5f));
+        player.getWorld().spawnParticle(Particle.REDSTONE, start.clone().add(0, Math.sin(Math.toRadians(t*80-80)), 0), 2, 0, 0, 0, new Particle.DustOptions(Color.BLUE, 1.5f));
 
         t++;
 
