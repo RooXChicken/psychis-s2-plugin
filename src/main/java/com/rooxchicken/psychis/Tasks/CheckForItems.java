@@ -6,7 +6,11 @@ import org.bukkit.inventory.ItemStack;
 
 import com.rooxchicken.psychis.Psychis;
 import com.rooxchicken.psychis.Weapons.AgniAxe;
+import com.rooxchicken.psychis.Weapons.Charger;
+import com.rooxchicken.psychis.Weapons.Frostfang;
 import com.rooxchicken.psychis.Weapons.Stormbringer;
+import com.rooxchicken.psychis.Weapons.Tideshaper;
+import com.rooxchicken.psychis.Weapons.VoidPiercer;
 
 public class CheckForItems extends Task
 {
@@ -34,6 +38,14 @@ public class CheckForItems extends Task
                         Stormbringer.addPlayer(player);
                     if(item.getItemMeta().getDisplayName().equals(plugin.agniAxe.itemName))
                         AgniAxe.addPlayer(player);
+                    if(item.getItemMeta().getDisplayName().equals(plugin.voidPiercer.itemName))
+                        VoidPiercer.addPlayer(player);
+                    if(item.getItemMeta().getDisplayName().equals(plugin.charger.itemName))
+                        Charger.addPlayer(player);
+                    if(item.getItemMeta().getDisplayName().equals(plugin.frostfang.itemName))
+                        Frostfang.addPlayer(player);
+                    if(item.getItemMeta().getDisplayName().equals(plugin.tideshaper.itemName))
+                        Tideshaper.addPlayer(player);
                 }
             }
         }

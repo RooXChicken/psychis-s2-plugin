@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -30,6 +31,10 @@ public class GiveItems implements CommandExecutor
         ItemMeta agniMeta = agniAxe.getItemMeta();
         agniMeta.setDisplayName("§x§F§F§8§0§2§2§lAgni Axe");
         agniMeta.setCustomModelData(1);
+        agniMeta.addEnchant(Enchantment.DAMAGE_ALL, 3, true);
+        agniMeta.addEnchant(Enchantment.FIRE_ASPECT, 2, true);
+        agniMeta.addEnchant(Enchantment.DURABILITY, 3, true);
+        agniMeta.addEnchant(Enchantment.MENDING, 1, true);
         agniAxe.setItemMeta(agniMeta);
 
         player.getInventory().addItem(agniAxe);
@@ -38,6 +43,9 @@ public class GiveItems implements CommandExecutor
         ItemMeta chargerMeta = charger.getItemMeta();
         chargerMeta.setDisplayName("§x§F§F§F§3§3§9§lCharger");
         chargerMeta.setCustomModelData(1);
+        chargerMeta.addEnchant(Enchantment.MULTISHOT, 1, true);
+        chargerMeta.addEnchant(Enchantment.MENDING, 1, true);
+        chargerMeta.addEnchant(Enchantment.DURABILITY, 3, true);
         charger.setItemMeta(chargerMeta);
 
         player.getInventory().addItem(charger);
@@ -46,6 +54,9 @@ public class GiveItems implements CommandExecutor
         ItemMeta voidMeta = voidPiercer.getItemMeta();
         voidMeta.setDisplayName("§x§C§C§3§9§F§F§lVoid Piercer");
         voidMeta.setCustomModelData(2);
+        voidMeta.addEnchant(Enchantment.DAMAGE_ALL, 3, true);
+        voidMeta.addEnchant(Enchantment.DURABILITY, 3, true);
+        voidMeta.addEnchant(Enchantment.MENDING, 1, true);
         voidPiercer.setItemMeta(voidMeta);
 
         player.getInventory().addItem(voidPiercer);
@@ -54,6 +65,11 @@ public class GiveItems implements CommandExecutor
         ItemMeta frostMeta = frostFang.getItemMeta();
         frostMeta.setDisplayName("§x§2§B§D§8§F§F§lFrostfang");
         frostMeta.setCustomModelData(1);
+        frostMeta.addEnchant(Enchantment.DAMAGE_ALL, 3, true);
+        frostMeta.addEnchant(Enchantment.DURABILITY, 3, true);
+        frostMeta.addEnchant(Enchantment.MENDING, 1, true);
+        frostMeta.addEnchant(Enchantment.LOOT_BONUS_MOBS, 3, true);
+        frostMeta.addEnchant(Enchantment.SWEEPING_EDGE, 3, true);
         frostFang.setItemMeta(frostMeta);
 
         player.getInventory().addItem(frostFang);
@@ -62,6 +78,9 @@ public class GiveItems implements CommandExecutor
         ItemMeta stormMeta = stormBringer.getItemMeta();
         stormMeta.setDisplayName("§x§D§9§E§E§F§3§lStormbringer");
         stormMeta.setCustomModelData(1);
+        stormMeta.addEnchant(Enchantment.DAMAGE_ALL, 3, true);
+        stormMeta.addEnchant(Enchantment.DURABILITY, 3, true);
+        stormMeta.addEnchant(Enchantment.MENDING, 1, true);
         stormBringer.setItemMeta(stormMeta);
 
         player.getInventory().addItem(stormBringer);
@@ -70,6 +89,11 @@ public class GiveItems implements CommandExecutor
         ItemMeta tideMeta = tideShaper.getItemMeta();
         tideMeta.setDisplayName("§x§1§6§8§3§F§F§lTideshaper");
         tideMeta.setCustomModelData(2);
+        tideMeta.addEnchant(Enchantment.DAMAGE_ALL, 3, true);
+        tideMeta.addEnchant(Enchantment.DURABILITY, 3, true);
+        tideMeta.addEnchant(Enchantment.MENDING, 1, true);
+        tideMeta.addEnchant(Enchantment.LOOT_BONUS_MOBS, 3, true);
+        tideMeta.addEnchant(Enchantment.SWEEPING_EDGE, 3, true);
         tideShaper.setItemMeta(tideMeta);
 
         player.getInventory().addItem(tideShaper);

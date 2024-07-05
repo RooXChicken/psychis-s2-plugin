@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
@@ -85,7 +86,7 @@ public class Stormbringer extends Weapon
     @EventHandler
     public void activateDoubleJump(PlayerToggleFlightEvent event)
     {
-        if(event.getPlayer().getGameMode() == GameMode.CREATIVE || !players.contains(event.getPlayer()))
+        if(event.getPlayer().getGameMode() == GameMode.CREATIVE || !players.contains(event.getPlayer()) || event.getPlayer().getCooldown(Material.NETHERITE_SHOVEL) > 0)
             return;
 
         event.setCancelled(true);
@@ -95,6 +96,8 @@ public class Stormbringer extends Weapon
 
         Vector direction = player.getLocation().getDirection().clone();
         player.setVelocity(player.getVelocity().add(direction));
+
+        player.setCooldown(Material.NETHERITE_SHOVEL, 100);
 
         jumpEffect(player);
 

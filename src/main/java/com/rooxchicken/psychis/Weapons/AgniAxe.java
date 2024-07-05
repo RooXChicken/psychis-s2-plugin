@@ -58,7 +58,7 @@ public class AgniAxe extends Weapon
     }
 
     @EventHandler
-    public void handleMacePhysics(EntityDamageByEntityEvent event)
+    public void handleDamageBuildup(EntityDamageByEntityEvent event)
     {
         if(!(event.getEntity() instanceof LivingEntity && event.getDamager() instanceof Player))
             return;

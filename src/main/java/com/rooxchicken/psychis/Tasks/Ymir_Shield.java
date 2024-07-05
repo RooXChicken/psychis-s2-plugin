@@ -32,6 +32,9 @@ public class Ymir_Shield extends Task
     @Override
     public void run()
     {
+        if(!player.isValid())
+            cancel = true;
+        
         spawnShields();
 
         if(count == 0)

@@ -77,7 +77,11 @@ import com.rooxchicken.psychis.Tasks.CheckForItems;
 import com.rooxchicken.psychis.Tasks.CooldownTask;
 import com.rooxchicken.psychis.Tasks.Task;
 import com.rooxchicken.psychis.Weapons.AgniAxe;
+import com.rooxchicken.psychis.Weapons.Charger;
+import com.rooxchicken.psychis.Weapons.Frostfang;
 import com.rooxchicken.psychis.Weapons.Stormbringer;
+import com.rooxchicken.psychis.Weapons.Tideshaper;
+import com.rooxchicken.psychis.Weapons.VoidPiercer;
 
 public class Psychis extends JavaPlugin implements Listener
 {
@@ -95,6 +99,10 @@ public class Psychis extends JavaPlugin implements Listener
 
     public Stormbringer stormbringer;
     public AgniAxe agniAxe;
+    public VoidPiercer voidPiercer;
+    public Charger charger;
+    public Frostfang frostfang;
+    public Tideshaper tideshaper;
 
     private List<String> blockedCommands = new ArrayList<>();
 
@@ -153,6 +161,10 @@ public class Psychis extends JavaPlugin implements Listener
 
         stormbringer = new Stormbringer(this);
         agniAxe = new AgniAxe(this);
+        voidPiercer = new VoidPiercer(this);
+        charger = new Charger(this);
+        frostfang = new Frostfang(this);
+        tideshaper = new Tideshaper(this);
 
         for(Player player : getServer().getOnlinePlayers())
         {
@@ -174,6 +186,10 @@ public class Psychis extends JavaPlugin implements Listener
 
                 stormbringer.passive();
                 agniAxe.passive();
+                voidPiercer.passive();
+                charger.passive();
+                frostfang.passive();
+                tideshaper.passive();
 
                 for(Task t : _tasks)
                 {
@@ -317,7 +333,7 @@ public class Psychis extends JavaPlugin implements Listener
         Player player = event.getPlayer();
         ItemStack item = event.getItem();
 
-        if(item.hasItemMeta() && item.getItemMeta().getDisplayName().equals("§f§l§oChoice Compass"))
+        if(item != null && item.hasItemMeta() && item.getItemMeta().getDisplayName().equals("§f§l§oChoice Compass"))
         {
             item.setAmount(item.getAmount() - 1);
             PersistentDataContainer data = player.getPersistentDataContainer();
