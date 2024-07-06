@@ -28,6 +28,11 @@ public class CheckForItems extends Task
     public void run()
     {
         Stormbringer.players.clear();
+        AgniAxe.players.clear();
+        VoidPiercer.players.clear();
+        Charger.players.clear();
+        Frostfang.players.clear();
+        Tideshaper.players.clear();
         for(Player player : Bukkit.getOnlinePlayers())
         {
             for(ItemStack item : player.getInventory())
