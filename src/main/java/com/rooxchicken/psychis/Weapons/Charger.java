@@ -73,7 +73,8 @@ public class Charger extends Weapon
             arrow.getWorld().spawnParticle(Particle.REDSTONE, arrow.getLocation(), 16, 0.1, 0.1, 0.1, new Particle.DustOptions(Color.YELLOW, 0.4f));
             if(arrow instanceof Arrow && ((Arrow)arrow).isInBlock())
             {
-                arrow.getWorld().strikeLightning(arrow.getLocation());
+                summonLightning(arrow);
+                //arrow.getWorld().strikeLightning(arrow.getLocation());
                 toRemove.add(arrow);
             }
 
@@ -105,13 +106,6 @@ public class Charger extends Weapon
         ItemStack charger = player.getInventory().getItemInMainHand();
         if(charger != null && charger.hasItemMeta() && charger.getItemMeta().getDisplayName().equals(itemName))
         {
-            // int ticks = 0;
-            // if(playerChargeMap.containsKey(player))
-            //     ticks = playerChargeMap.get(player);
-
-            // ticks++;
-
-            // playerChargeMap.put(player, ticks);
             CrossbowMeta meta = (CrossbowMeta)charger.getItemMeta();
             ItemStack ammo = new ItemStack(Material.AIR);
 
@@ -160,8 +154,8 @@ public class Charger extends Weapon
             
             if(damager instanceof Arrow)
             {
-                damager.getWorld().strikeLightning(damager.getLocation());
-                event.setDamage(event.getDamage()*2);
+                summonLightning(damager);
+                event.setDamage((event.getDamage()+3)*1.5);
                 arrows.remove(damager);
 
                 entity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 0));
@@ -189,6 +183,31 @@ public class Charger extends Weapon
                 player.getWorld().playSound(player.getLocation(), Sound.ITEM_TRIDENT_HIT, 1, 1);
                 arrows.add((Projectile)event.getEntity());
             }
+        }
+    }
+
+    private void summonLightning(Projectile arrow)
+    {
+        Location loc = arrow.getLocation().clone();
+        double x = 0;
+        double z = 0;
+
+        for(Object o : Psychis.getNearbyEntities(loc, 1))
+        {
+            if(o instanceof LivingEntity && o != (Player)arrow.getShooter())
+                ((LivingEntity)o).damage(4);
+        }
+
+        loc.getWorld().playSound(loc, Sound.ITEM_TRIDENT_THUNDER, 0.3f, 0.8f);
+
+        for(int y = 0; y < 100; y++)
+        {
+            x += (Math.random() * 1) - 0.5;
+            z += (Math.random() * 1) - 0.5;
+
+            loc.add(x, y/2.0, z);
+
+            loc.getWorld().spawnParticle(Particle.REDSTONE, loc, 80, 0.3, 1, 0.3, new Particle.DustOptions(Color.YELLOW, 1.0f));
         }
     }
 }

@@ -80,14 +80,14 @@ public class Midas_Jackpot extends Task implements Listener
             }
         }
 
-        //start.getWorld().spawnParticle(Particle., start, size*6, size/2.0, size/2.0, size/2.0, 0);
-
         if(++t > 180 && !converted.isEmpty())
         {
             for(int i = 0; i < converted.size()/10; i++)
             {
                 int index = (int)(Math.random() * converted.size());
                 converted.get(index).setBlockData(oldBlocks.get(index));
+                converted.remove(index);
+                oldBlocks.remove(index);
             }
         }
 

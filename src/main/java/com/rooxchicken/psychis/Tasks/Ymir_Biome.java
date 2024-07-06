@@ -65,10 +65,28 @@ public class Ymir_Biome extends Task
             }
         }
 
-        start.getWorld().spawnParticle(Particle.SNOWFLAKE, start, size*6, size/2.0, size/2.0, size/2.0, 0);
+        start.getWorld().spawnParticle(Particle.SNOWFLAKE, start, size*6 * ((t > 180) ? (int)(180.0/t) : 1), size/2.0, size/2.0, size/2.0, 0);
 
-        if(++t > 180)
+        if(++t > 180 && !converted.isEmpty())
+        {
+            for(int i = 0; i < converted.size()/10; i++)
+            {
+                int index = (int)(Math.random() * converted.size());
+                converted.get(index).setBlockData(oldBlocks.get(index));
+                converted.remove(index);
+                oldBlocks.remove(index);
+            }
+        }
+
+        if(t > 240)
+        {
+            for(int i = 0; i < converted.size(); i++)
+            {
+                converted.get(i).setBlockData(oldBlocks.get(i));
+            }
+
             cancel = true;
+        }
     }
 
     private void spread()
@@ -82,7 +100,7 @@ public class Ymir_Biome extends Task
         for(int i = 0; i < blocks.size(); i++)
         {
             Block block = blocks.get(i);
-            if(!converted.contains(block) && !(block.getState() instanceof Container))
+            if(!converted.contains(block) && !(block.getState() instanceof Container) && !block.getType().equals(Material.DRAGON_EGG))
             {
                 oldBlocks.add(block.getBlockData());
                 converted.add(block);
@@ -106,11 +124,6 @@ public class Ymir_Biome extends Task
     @Override
     public void onCancel()
     {
-        for(int i = 0; i < converted.size(); i++)
-        {
-            converted.get(i).setBlockData(oldBlocks.get(i));
-        }
-
         ymir.deadly = false;
     }
 }
