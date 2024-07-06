@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
@@ -16,21 +17,26 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.CrossbowMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import com.rooxchicken.psychis.Psychis;
 import com.rooxchicken.psychis.Tasks.Charger_Polarity;
+import com.rooxchicken.psychis.Tasks.Tideshaper_GroundPound;
 
 public class Charger extends Weapon
 {
     public static ArrayList<Player> players;
     private ArrayList<Projectile> arrows;
+    private HashMap<Player, Integer> playerChargeMap;
 
     private Psychis plugin;
 
@@ -42,6 +48,7 @@ public class Charger extends Weapon
         itemName = "§x§F§F§F§3§3§9§lCharger";
         type = 4;
         
+        playerChargeMap = new HashMap<Player, Integer>();
         arrows = new ArrayList<Projectile>();
         players = new ArrayList<Player>();
     }
@@ -55,11 +62,12 @@ public class Charger extends Weapon
     public void passive()
     {
         for(Player player : players)
+        {
             player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 21, 3));
+            
+        }
 
         ArrayList<Projectile> toRemove = new ArrayList<Projectile>();
-
-
         for(Projectile arrow : arrows)
         {
             arrow.getWorld().spawnParticle(Particle.REDSTONE, arrow.getLocation(), 16, 0.1, 0.1, 0.1, new Particle.DustOptions(Color.YELLOW, 0.4f));
@@ -80,6 +88,55 @@ public class Charger extends Weapon
         {
             arrow.remove();
             arrows.remove(arrow);
+        }
+    }
+
+    @EventHandler
+    public void chargeCrossbow(PlayerInteractEvent event)
+    {
+        if(event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK)
+            return;
+
+        Player player = event.getPlayer();
+
+        if(!players.contains(player))
+            return;
+
+        ItemStack charger = player.getInventory().getItemInMainHand();
+        if(charger != null && charger.hasItemMeta() && charger.getItemMeta().getDisplayName().equals(itemName))
+        {
+            // int ticks = 0;
+            // if(playerChargeMap.containsKey(player))
+            //     ticks = playerChargeMap.get(player);
+
+            // ticks++;
+
+            // playerChargeMap.put(player, ticks);
+            CrossbowMeta meta = (CrossbowMeta)charger.getItemMeta();
+            ItemStack ammo = new ItemStack(Material.AIR);
+
+            if(player.getInventory().getItemInOffHand().getType().name().toLowerCase().contains("firework"))
+            {
+                ammo = player.getInventory().getItemInOffHand();
+                player.getInventory().getItemInOffHand().setAmount(player.getInventory().getItemInOffHand().getAmount()-1);
+            }
+
+            if(ammo.getType().equals(Material.AIR))
+                for(ItemStack item : player.getInventory())
+                {
+                    if(item != null && item.getType().name().toLowerCase().contains("arrow"))
+                    {
+                        ammo = item;
+                        item.setAmount(item.getAmount()-1);
+                        break;
+                    }
+                }
+
+            if(!ammo.getType().equals(Material.AIR))
+            {
+                meta.addChargedProjectile(ammo);
+                charger.setItemMeta(meta);
+            }
         }
     }
 

@@ -15,7 +15,10 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -23,7 +26,7 @@ import com.rooxchicken.psychis.Psychis;
 import com.rooxchicken.psychis.Abilities.Midas;
 import com.rooxchicken.psychis.Abilities.Ymir;
 
-public class Midas_Jackpot extends Task
+public class Midas_Jackpot extends Task implements Listener
 {
     private Player player;
     private Location start;
@@ -42,6 +45,8 @@ public class Midas_Jackpot extends Task
         midas = _midas;
         start = player.getLocation().clone();
         tickThreshold = 1;
+
+        Bukkit.getPluginManager().registerEvents(this, _plugin);
 
         converted = new ArrayList<Block>();
         oldBlocks = new ArrayList<BlockData>();
@@ -129,9 +134,16 @@ public class Midas_Jackpot extends Task
         start.getWorld().playSound(start, Sound.BLOCK_NETHER_GOLD_ORE_BREAK, 2, 1);
     }
 
+    @EventHandler
+    public void preventGoldMining(BlockBreakEvent event)
+    {
+        event.setCancelled(event.getBlock().getType().equals(Material.GOLD_BLOCK));
+    }
+
     @Override
     public void onCancel()
     {
         midas.deadly = false;
+        HandlerList.unregisterAll(this);
     }
 }

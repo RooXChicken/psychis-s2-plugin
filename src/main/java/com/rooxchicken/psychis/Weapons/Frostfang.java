@@ -54,7 +54,11 @@ public class Frostfang extends Weapon
 
     public void passive()
     {
-        
+        for(Player player : players)
+        {
+            if(playerHitCount.containsKey(player))
+                player.getWorld().spawnParticle(Particle.REDSTONE, player.getLocation(), playerHitCount.get(player), 0.2, 0.1, 0.2, new Particle.DustOptions(Color.fromRGB(0x6ab0ff), 1.0f));
+        }
     }
 
     @EventHandler
@@ -101,7 +105,7 @@ public class Frostfang extends Weapon
                     spawnParticle(start.clone().add(xOffset * (-1+i)/2, 0, zOffset * (-1+i)/2));
                 }
                 event.setDamage(event.getDamage()*2);
-                entity.setFreezeTicks(200);
+                entity.setFreezeTicks(400);
                 entity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 200, 0));
 
                 entity.getWorld().playSound(entity.getLocation(), Sound.BLOCK_GLASS_BREAK, 1, 1);

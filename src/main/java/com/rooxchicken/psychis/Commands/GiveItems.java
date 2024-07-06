@@ -43,7 +43,7 @@ public class GiveItems implements CommandExecutor
         ItemMeta chargerMeta = charger.getItemMeta();
         chargerMeta.setDisplayName("§x§F§F§F§3§3§9§lCharger");
         chargerMeta.setCustomModelData(1);
-        chargerMeta.addEnchant(Enchantment.MULTISHOT, 1, true);
+        chargerMeta.addEnchant(Enchantment.QUICK_CHARGE, 16, true);
         chargerMeta.addEnchant(Enchantment.MENDING, 1, true);
         chargerMeta.addEnchant(Enchantment.DURABILITY, 3, true);
         charger.setItemMeta(chargerMeta);

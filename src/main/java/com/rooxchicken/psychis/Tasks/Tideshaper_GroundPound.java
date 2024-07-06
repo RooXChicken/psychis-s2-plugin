@@ -17,8 +17,9 @@ import com.rooxchicken.psychis.Psychis;
 public class Tideshaper_GroundPound extends Task
 {
     private Player player;
-    private int t;
-    private int tt;
+    private Location start;
+    private int t = 0;
+    private int tt = 0;
 
     private double[] cacheX;
     private double[] cacheZ;
@@ -47,15 +48,18 @@ public class Tideshaper_GroundPound extends Task
     {
         player.getWorld().spawnParticle(Particle.WATER_SPLASH, player.getLocation().clone().add(0,1,0), 3, 0, 0, 0);
 
-        if(++tt < 7 || !player.isOnGround())
+        if(++tt < 7 || (!player.isOnGround() && t == 0))
             return;
+
+        if(t == 0)
+            start = player.getLocation().clone();
 
         if(t % 2 == 0)
             player.getWorld().playSound(player.getLocation(), Sound.ITEM_BUCKET_EMPTY, 1, 1);
         
         for(int i = 0; i < 90; i++)
         {
-            Location particlePos = player.getLocation().clone();
+            Location particlePos = start.clone();
             
             double xOffset = cacheX[i] * t/3.0;
             double zOffset = cacheZ[i] * t/3.0;
