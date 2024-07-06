@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -21,7 +22,7 @@ public class VoidPiercer_GravityWave extends Task
     private double xOffset;
     private double zOffset;
 
-    private ArrayList<Entity> frozen;
+    private ArrayList<LivingEntity> frozen;
 
     private int t = 0;
 
@@ -38,7 +39,7 @@ public class VoidPiercer_GravityWave extends Task
         xOffset = Math.cos(rad);
         zOffset = Math.sin(rad);
 
-        frozen = new ArrayList<Entity>();
+        frozen = new ArrayList<LivingEntity>();
 
         player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ILLUSIONER_CAST_SPELL, 1, 0.2f);
         tickThreshold = 1;
@@ -65,14 +66,17 @@ public class VoidPiercer_GravityWave extends Task
 
         for(Object o : Psychis.getNearbyEntities(start, 4))
         {
-            if(o instanceof Entity && o != player)
+            if(o instanceof LivingEntity && o != player)
             {
                 if(!frozen.contains(o))
-                    frozen.add((Entity)o);
+                {
+                    frozen.add((LivingEntity)o);
+                    ((LivingEntity)o).damage(12.0);
+                }
             }
         }
 
-        for(Entity entity : frozen)
+        for(LivingEntity entity : frozen)
             entity.setVelocity(new Vector(0,0,0));
 
         if(++t > 50)
