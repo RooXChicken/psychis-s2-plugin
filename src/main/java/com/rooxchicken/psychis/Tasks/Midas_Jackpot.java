@@ -113,7 +113,7 @@ public class Midas_Jackpot extends Task implements Listener
         for(int i = 0; i < blocks.size(); i++)
         {
             Block block = blocks.get(i);
-            if(!converted.contains(block) && !(block.getState() instanceof Container))
+            if(!converted.contains(block) && !(block.getState() instanceof Container) && !block.getType().equals(Material.DRAGON_EGG))
             {
                 oldBlocks.add(block.getBlockData());
                 converted.add(block);
