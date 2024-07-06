@@ -51,12 +51,13 @@ public class Stormbringer extends Weapon
     {
         for(Player player : players)
         {
-            if(player.isOnGround())
+            if(player.getCooldown(Material.NETHERITE_SHOVEL) <= 0 && player.isOnGround())
             {
                 player.setAllowFlight(true);
-                if(jumps.contains(player))
-                    jumps.remove(player);
             }
+
+            if(jumps.contains(player))
+                jumps.remove(player);
         }
     }
 
