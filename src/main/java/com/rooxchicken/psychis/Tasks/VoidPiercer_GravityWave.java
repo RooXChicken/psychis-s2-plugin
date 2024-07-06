@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.bukkit.Color;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
@@ -72,6 +73,8 @@ public class VoidPiercer_GravityWave extends Task
                 {
                     frozen.add((LivingEntity)o);
                     ((LivingEntity)o).damage(12.0);
+                    if(o instanceof Player)
+                        ((Player)o).setCooldown(Material.ENDER_PEARL, 50-t);
                 }
             }
         }
@@ -79,7 +82,7 @@ public class VoidPiercer_GravityWave extends Task
         for(LivingEntity entity : frozen)
             entity.setVelocity(new Vector(0,0,0));
 
-        if(++t > 50)
+        if(++t > 49)
             cancel = true;
     }
 
