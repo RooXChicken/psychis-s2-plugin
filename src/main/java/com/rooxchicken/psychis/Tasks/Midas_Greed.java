@@ -72,7 +72,7 @@ public class Midas_Greed extends Task implements Listener
             return;
 
         ItemStack item = event.getItem();
-        if(item != null && item.getType() == Material.GOLDEN_APPLE)
+        if(item != null && (item.getType().equals(Material.GOLDEN_APPLE) || item.getType().equals(Material.ENCHANTED_GOLDEN_APPLE)))
         {
             event.setCancelled(true);
             p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PLAYER_BURP, 1, 0.9f);
