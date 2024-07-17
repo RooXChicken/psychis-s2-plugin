@@ -47,7 +47,7 @@ public class Midas extends Ability
         type = 6;
 
         cooldown1 = 90;
-        cooldown2 = 180;
+        cooldown2 = 80;
 
         name = "Midas";
     }

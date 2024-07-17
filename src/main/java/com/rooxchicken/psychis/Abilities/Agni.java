@@ -62,6 +62,8 @@ public class Agni extends Ability
                 return;
 
         double dmg = ticks/6.0;
+        if(dmg > 12)
+            dmg = 16;
         if(player.getFireTicks() > 0 || player.getWorld().getEnvironment() == Environment.NETHER)
             dmg *= 1.5;
         switch(state)
@@ -76,10 +78,6 @@ public class Agni extends Ability
                 ticks += Math.pow(0.9, ticks);
                 Agni_Cinder.constructArrow(player.getEyeLocation(), dmg, player);
                 Agni_Cinder.glow(player);
-
-                if(ticks % 5 == 0)
-                {
-                }
                 break;
             case 2:
                 if(ticks == -1)

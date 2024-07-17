@@ -115,16 +115,6 @@ public class Ymir extends Ability implements Listener
         player.getWorld().playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT_FREEZE, 1, 1);
     }
 
-    // @EventHandler
-    // public void blockDamage(EntityDamageEvent event)
-    // {
-    //     if(event.getEntity() != player || (shield == null && shield.count == 0))
-    //         return;
-
-    //     event.setCancelled(true);
-    //     onShield();
-    // }
-
     @EventHandler
     public void blockDamageAndFreeze(EntityDamageByEntityEvent event)
     {
