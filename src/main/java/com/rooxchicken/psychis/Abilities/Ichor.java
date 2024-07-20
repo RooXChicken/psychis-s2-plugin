@@ -49,6 +49,9 @@ public class Ichor extends Ability
     private NamespacedKey mobsKilledKey;
     private boolean shouldCrawl = false;
 
+    private Ichor_FangSlide fangSlide;
+    private Ichor_BloodRay bloodRay;
+
     public Ichor(Psychis _plugin, Player _player)
     {
         super(_plugin, _player);
@@ -74,6 +77,17 @@ public class Ichor extends Ability
         player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 2, 0));
         if(player.getWorld().getTime() % 24000 < 13000)
             player.getPersistentDataContainer().set(mobsKilledKey, PersistentDataType.INTEGER, 0);
+
+        if(fangSlide != null && fangSlide.cancel)
+        {
+            plugin.setCooldown(player, cooldown1, Psychis.ability1CooldownKey);
+            fangSlide = null;
+        }
+
+        if(bloodRay != null && bloodRay.cancel)
+        {
+            bloodRay = null;
+        }
     }
 
     @Override
@@ -81,21 +95,17 @@ public class Ichor extends Ability
     {
         if(state == 0)
         {
-            Ichor_FangSlide fangSlide = null;
-            for(Task task : Psychis.tasks)
-                if(task instanceof Ichor_FangSlide)
-                    fangSlide = (Ichor_FangSlide)task;
-
             if(fangSlide != null)
             {
-                fangSlide.t = -1;
+                fangSlide.cancel = true;
                 return;
             }
 
-            if(!plugin.setCooldown(player, cooldown1, Psychis.ability1CooldownKey))
-                return;
-
-            Psychis.tasks.add(new Ichor_FangSlide(plugin, player));
+            if(plugin.getCooldown(player, Psychis.ability1CooldownKey) <= 0)
+            {
+                fangSlide = new Ichor_FangSlide(plugin, player);
+                Psychis.tasks.add(fangSlide);
+            }
         }
     }
     
@@ -105,10 +115,11 @@ public class Ichor extends Ability
         if(!plugin.secondUnlocked(player))
             return;
 
-        if(!plugin.setCooldown(player, cooldown2, Psychis.ability2CooldownKey))
-            return;
-        
-        Psychis.tasks.add(new Ichor_BloodRay(plugin, player));
+        if(bloodRay == null && plugin.getCooldown(player, Psychis.ability2CooldownKey) <= 0)
+        {
+            bloodRay = new Ichor_BloodRay(plugin, player);
+            Psychis.tasks.add(bloodRay);
+        }
     }
 
     @EventHandler

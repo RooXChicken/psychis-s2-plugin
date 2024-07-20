@@ -521,6 +521,14 @@ public class Psychis extends JavaPlugin implements Listener
         return true;
     }
 
+    public int getCooldown(Player player, NamespacedKey key)
+    {
+        PersistentDataContainer data = player.getPersistentDataContainer();
+        checkHasCooldown(data);
+        
+        return data.get(key, PersistentDataType.INTEGER);
+    }
+
     public boolean secondUnlocked(Player player)
     {
         PersistentDataContainer data = player.getPersistentDataContainer();

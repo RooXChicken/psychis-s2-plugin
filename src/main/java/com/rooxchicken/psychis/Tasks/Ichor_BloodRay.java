@@ -58,11 +58,20 @@ public class Ichor_BloodRay extends Task implements Listener
     {
         if(t == 200)
         {
+            plugin.setCooldown(player, 80, Psychis.ability2CooldownKey);
             player.getWorld().playSound(player.getLocation(), Sound.BLOCK_STONE_BREAK, 1, 1);
             for(int i = 0; i < size; i++)
             {
-                player.getWorld().spawnParticle(Particle.BLOCK_DUST, points[i], 20, 0.5, 0.5, 0.5, Material.REDSTONE_BLOCK.createBlockData());
+                player.getWorld().spawnParticle(Particle.REDSTONE, points[i], 3, 0.8, 0.8, 0.8, new Particle.DustOptions(Color.MAROON, 3.0f));
+                for(Object o : Psychis.getNearbyEntities(points[i], 1))
+                {
+                    if(o instanceof LivingEntity && o != player)
+                    {
+                        ((LivingEntity)o).damage(8);
+                    }
+                }
             }
+
         }
         if(t < 200)
         {
@@ -74,9 +83,9 @@ public class Ichor_BloodRay extends Task implements Listener
                 player.getWorld().spawnParticle(Particle.REDSTONE, points[i], 1, 0.1*particleSize, 0.1*particleSize, 0.1*particleSize, new Particle.DustOptions(Color.RED, particleSize));
                 for(Object o : Psychis.getNearbyEntities(points[i], 1))
                 {
-                    if(o instanceof LivingEntity)
+                    if(o instanceof LivingEntity && o != player)
                     {
-                        ((LivingEntity)o).damage(3*particleSize);
+                        ((LivingEntity)o).damage(1.5*particleSize);
                     }
                 }
             }

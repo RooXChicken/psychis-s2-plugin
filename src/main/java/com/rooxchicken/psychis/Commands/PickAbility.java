@@ -31,7 +31,12 @@ public class PickAbility implements CommandExecutor
                 return true;
         }
 
-        data.set(Psychis.abilityKey, PersistentDataType.INTEGER, Integer.parseInt(args[0]));
+        int ability = Integer.parseInt(args[0]);
+        if(ability != 6)
+            data.set(Psychis.abilityKey, PersistentDataType.INTEGER, ability);
+        else
+            return true;
+        
         plugin.addPlayerAbility(player);
 
         player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 1, 1);

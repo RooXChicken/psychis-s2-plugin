@@ -3,6 +3,7 @@ package com.rooxchicken.psychis.Tasks;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -55,6 +56,14 @@ public class Ichor_FangSlide extends Task implements Listener
         }
         changedBlocks.clear();
 
+        Block block = ahead.clone().add(ahead.getDirection()).getBlock();
+        if(!block.isPassable())
+        {
+            Location blockLoc = block.getLocation();
+            if(blockLoc.clone().add(0,1,0).getBlock().isPassable())
+                player.teleport(player.getLocation().add(0,1,0));
+        }
+
         for(int i = 0; i < 3; i++)
         {
             for(int ii = 0; ii < 3; ii++)
@@ -71,14 +80,8 @@ public class Ichor_FangSlide extends Task implements Listener
 
         player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 2, 3));
         player.setVelocity(ahead.getDirection().multiply(0.6).add(new Vector(0, player.getVelocity().getY() - 0.12, 0)));
-        Block block = ahead.clone().add(ahead.getDirection()).getBlock();
-        if(!block.isPassable())
-        {
-            Location blockLoc = block.getLocation();
-            player.teleport(player.getLocation().add(ahead.getDirection()).add(0,1,0));
-        }
 
-        player.getWorld().spawnParticle(Particle.BLOCK_DUST, player.getLocation(), 40, 0.2, 0.2, 0.2, Material.REDSTONE_BLOCK.createBlockData());
+        player.getWorld().spawnParticle(Particle.REDSTONE, player.getLocation(), 40, 0.4, 0.2, 0.4, new Particle.DustOptions(Color.MAROON, 1.0f));
         
         if(t == -1 || ++t > 120)
             cancel = true;
