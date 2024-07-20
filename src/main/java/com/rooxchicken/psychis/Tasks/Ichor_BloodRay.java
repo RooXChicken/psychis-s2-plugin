@@ -12,6 +12,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
@@ -65,7 +66,7 @@ public class Ichor_BloodRay extends Task implements Listener
                 player.getWorld().spawnParticle(Particle.REDSTONE, points[i], 3, 0.8, 0.8, 0.8, new Particle.DustOptions(Color.MAROON, 3.0f));
                 for(Object o : Psychis.getNearbyEntities(points[i], 1))
                 {
-                    if(o instanceof LivingEntity && o != player)
+                    if(o instanceof LivingEntity && o != player && !(o instanceof Villager))
                     {
                         ((LivingEntity)o).damage(8);
                     }
@@ -83,7 +84,7 @@ public class Ichor_BloodRay extends Task implements Listener
                 player.getWorld().spawnParticle(Particle.REDSTONE, points[i], 1, 0.1*particleSize, 0.1*particleSize, 0.1*particleSize, new Particle.DustOptions(Color.RED, particleSize));
                 for(Object o : Psychis.getNearbyEntities(points[i], 1))
                 {
-                    if(o instanceof LivingEntity && o != player)
+                    if(o instanceof LivingEntity && o != player && !(o instanceof Villager))
                     {
                         ((LivingEntity)o).damage(1.5*particleSize);
                     }
