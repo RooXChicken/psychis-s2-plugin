@@ -59,6 +59,7 @@ import com.rooxchicken.psychis.Abilities.Agni;
 import com.rooxchicken.psychis.Abilities.Boreas;
 import com.rooxchicken.psychis.Abilities.Dolus;
 import com.rooxchicken.psychis.Abilities.Enil;
+import com.rooxchicken.psychis.Abilities.Ichor;
 import com.rooxchicken.psychis.Abilities.Midas;
 import com.rooxchicken.psychis.Abilities.Varuna;
 import com.rooxchicken.psychis.Abilities.Ymir;
@@ -256,6 +257,7 @@ public class Psychis extends JavaPlugin implements Listener
         sendPlayerData(player, "2_Boreas_3_Speed 2_Gust (COOLDOWN: 30s)_Launches the player backward,+acting as a dodge_Vortex (COOLDOWN: 1m)_Picks up players and entities in a+ball of wind that can be launched._Get these advancements: [Caves and Cliffs, Star Trader, Sniper Duel]");
         sendPlayerData(player, "2_Ymir_4_Fast Ice Speed_Frostbite (COOLDOWN: 1m)_Creates an icy shield that+completely protects against the next+3 hits, and freezes whoever attacks+the shield._Permafrost (COOLDOWN: 2m)_Summons an ice dome that slowly+freezes everything inside._Bring a blaze to an ice biome and kill it");
         sendPlayerData(player, "2_Dolus_5_Increased gravity_Retract (COOLDOWN: 45s)_Creates a gravitational pull that+brings all entities closer_Crush (COOLDOWN: 2m)_Creates a dome where players+cannot jump and entities are slowed_Survive at y=-67 or less for 1 minute");
+        sendPlayerData(player, "2_Ichor_7_Strength 1_Fang Slide (COOLDOWN: 45s)_Slide across the ground at a+breakneck speed_Blood Ray (COOLDOWN: 80s)_Shoot out a ray of blood+that gets larger and larger until+it explodes, allowing for unlimited+Fang Slide uses for 10 seconds_Kill 20 mobs in a single night");
 
     }
 
@@ -447,6 +449,8 @@ public class Psychis extends JavaPlugin implements Listener
                 return new Dolus(this, player);
             case 6:
                 return new Midas(this, player);
+            case 7:
+                return new Ichor(this, player);
 
             default:
                 return null;

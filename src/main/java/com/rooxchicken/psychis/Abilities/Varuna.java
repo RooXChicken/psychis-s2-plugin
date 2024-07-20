@@ -33,7 +33,7 @@ import com.rooxchicken.psychis.Tasks.Agni_HeatSeek;
 import com.rooxchicken.psychis.Tasks.Varuna_Typhoon;
 import com.rooxchicken.psychis.Tasks.Varuna_WaterJet;
 
-public class Varuna extends Ability implements Listener
+public class Varuna extends Ability
 {
     private Psychis plugin;
     private Player player;

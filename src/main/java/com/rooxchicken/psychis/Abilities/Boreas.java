@@ -21,7 +21,7 @@ import org.bukkit.potion.PotionEffectType;
 import com.rooxchicken.psychis.Psychis;
 import com.rooxchicken.psychis.Tasks.Boreas_Vortex;
 
-public class Boreas extends Ability implements Listener
+public class Boreas extends Ability
 {
     private Psychis plugin;
     private Player player;
