@@ -80,7 +80,7 @@ public class Agni_Cinder extends Task
                 if(entity instanceof LivingEntity && !(entity instanceof Villager))
                 {
                     agni.deadly = true;
-                    ((LivingEntity)entity).damage(dmg*5.0, player);
+                    ((LivingEntity)entity).damage(Math.min(16, dmg*5.0), player);
                 }
 
                 explode(particlePos);
