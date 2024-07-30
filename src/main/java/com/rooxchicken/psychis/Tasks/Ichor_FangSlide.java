@@ -64,14 +64,17 @@ public class Ichor_FangSlide extends Task implements Listener
                 player.teleport(player.getLocation().add(0,1,0));
         }
 
-        for(int i = 0; i < 3; i++)
+        BlockData blockData = Material.BARRIER.createBlockData();
+        for(int i = 0; i < 4; i++)
         {
-            for(int ii = 0; ii < 3; ii++)
+            for(int ii = 0; ii < 4; ii++)
             {
-                BlockData blockData = Material.BARRIER.createBlockData();
-                Location loc = player.getLocation().clone().add(-1+i,1,-1+ii);
-                changedBlocks.add(loc.getBlock());
-                player.sendBlockChange(loc, blockData);
+                Location loc = player.getLocation().clone().add(-2+i,1,-2+ii);
+                if(loc.getBlock().getType().equals(Material.AIR))
+                {
+                    changedBlocks.add(loc.getBlock());
+                    player.sendBlockChange(loc, blockData);
+                }
             }
         }
 
