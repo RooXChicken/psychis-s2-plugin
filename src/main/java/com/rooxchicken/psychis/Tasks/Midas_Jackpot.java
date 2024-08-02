@@ -69,7 +69,7 @@ public class Midas_Jackpot extends Task implements Listener
                     if(entity != player)
                     {
                         if(t % 6 == 0)
-                            entity.damage(2.6);
+                            entity.damage(6);
                     }
                     else if(entity == player)
                     {

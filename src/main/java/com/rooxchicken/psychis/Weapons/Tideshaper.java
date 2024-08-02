@@ -53,14 +53,7 @@ public class Tideshaper extends Weapon
 
     public void passive()
     {
-        for(Player player : players)
-        {
-            ItemStack item = player.getInventory().getItemInMainHand();
-            if(item != null && item.hasItemMeta() && item.getItemMeta().getDisplayName().equals(itemName))
-            {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 4, 0));
-            }
-        }
+        
     }
 
     @EventHandler
@@ -83,6 +76,7 @@ public class Tideshaper extends Weapon
             player.getWorld().playSound(player.getLocation(), Sound.ITEM_TRIDENT_RIPTIDE_3, 1, 0.7f);
 
             Psychis.tasks.add(new Tideshaper_GroundPound(plugin, player));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 200, 0));
         }
     }
 }
