@@ -76,7 +76,7 @@ public class Stormbringer extends Weapon
         ItemStack stormBringer = damager.getInventory().getItemInMainHand();
         if(stormBringer != null && stormBringer.hasItemMeta() && stormBringer.getItemMeta().getDisplayName().equals(itemName))
         {
-            double damage = Math.min(64, event.getDamage() + damager.getFallDistance()*2);
+            double damage = Math.min(48, event.getDamage() + damager.getFallDistance()*2);
             event.setDamage(damage);
             damager.setVelocity(new Vector(damager.getVelocity().getX(), damager.getFallDistance()/6.0, damager.getVelocity().getZ()));
 
